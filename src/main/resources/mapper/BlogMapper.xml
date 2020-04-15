@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace：该mapper.xml映射文件的 唯一标识 -->
+<mapper namespace="com.cjh.blog.dao.BlogRepository">
+
+	<resultMap id="Blog_Type_Map" type="com.cjh.blog.entity2.BlogQuery">
+		<id property="id" column="id"></id>
+		<result property="title" column="title"></result>
+		<result property="recommend" column="recommend"></result>
+		<result property="updateTime" column="update_time"></result>
+		<result property="typeId" column="type_id"></result>
+		<!-- 一对一使用association javaType指定该属性的类型-->
+		<association property="type" javaType="Type">
+			<id property="id" column="id"></id>
+			<result property="name" column="name"></result>
+		</association>
+	</resultMap>
+    <select id="selectBlogs" resultMap="Blog_Type_Map">
+		select t1.id,t1.title,t1.recommend,t1.update_time,t1.type_id,t2.id,t2.name
+		from t_blog t1 join t_type t2 on t1.type_id=t2.id order by t1.update_time desc
+	</select>
+
+	<select id="searchBlog" parameterType="com.cjh.blog.entity2.SearchBlog" resultMap="Blog_Type_Map">
+		select t1.id,t1.title,t1.recommend,t1.update_time,t1.type_id,t2.id,t2.name
+		from t_blog t1 join t_type t2 on t1.type_id=t2.id
+		<where>
+			<if test="title!=null and title!=''">
+				t1.title=#{title}
+			</if>
+			<if test="typeId!=null and typeId!=0">
+				and t1.type_id=#{typeId}
+			</if>
+			<if test="recommend!=null">
+				and	t1.recommend=#{recommend}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectBlogById" parameterType="Long" resultType="Blog">
+		select * from t_blog where id=#{id}
+	</select>
+
+	<select id="selectIndexBlogs" resultType="com.cjh.blog.entity2.IndexBlog">
+		select t1.id,t1.title,t1.first_picture,t1.description,t1.update_time,
+		t1.views,t2.avatar,t2.nickname,t3.name typeName,t3.id typeId from t_blog t1,t_user t2,t_type t3
+		where t1.user_id=t2.id and t1.type_id=t3.id order by update_time desc
+	</select>
+
+	<select id="selectBlogsByTypeId" parameterType="Long" resultType="com.cjh.blog.entity2.IndexBlog">
+		select t1.id,t1.title,t1.first_picture,t1.description,t1.update_time,
+		t1.views,t2.avatar,t2.nickname,t3.name typeName from t_blog t1,t_user t2,t_type t3
+		where t1.user_id=t2.id and t1.type_id=t3.id and t1.type_id=#{typeId} order by update_time desc
+	</select>
+
+	<select id="selectBlogsByTagId" parameterType="Long" resultType="com.cjh.blog.entity2.IndexBlog">
+        select b.id,b.title,b.first_picture,b.views,b.update_time,b.description,
+        t.name typeName,u.nickname,u.avatar
+        from t_blog b,t_type t,t_user u ,t_blog_tags tb,t_tag t1
+        where b.type_id = t.id and u.id = b.user_id and tb.blog_id = b.id and tb.tag_id = t1.id and t1.id = #{tagId}
+        order by b.update_time desc
+    </select>
+
+	<insert id="saveBlog" parameterType="Blog">
+		insert into t_blog (id,title, content, first_picture, flag,
+        views, appreciation, share_statement, commentabled,published,
+        recommend, create_time, update_time, type_id,tag_ids, user_id,description)
+        values (#{id},#{title},#{content},#{firstPicture},#{flag},#{views},#{appreciation},
+        #{shareStatement},#{commentabled},#{published},#{recommend},#{createTime},
+        #{updateTime},#{typeId},#{tagIds},#{userId},#{description})
+	</insert>
+
+	<insert id="saveBlogAndTag" parameterType="com.cjh.blog.entity2.BlogAndTag">
+        insert into t_blog_tags (tag_id, blog_id) values (#{tagId},#{blogId});
+    </insert>
+
+	<delete id="updateBlogAndTag" parameterType="com.cjh.blog.entity2.BlogAndTag">
+		delete from t_blog_tags where tag_id=#{tagId} and blog_id=#{blogId}
+	</delete>
+
+	<insert id="updateBlogAndTag2" parameterType="com.cjh.blog.entity2.BlogAndTag">
+		insert into t_blog_tags (tag_id, blog_id) values (#{tagId},#{blogId});
+	</insert>
+
+	<delete id="deleteBlogAndTag" parameterType="Long">
+		delete from t_blog_tags where blog_id = #{blogId}
+	</delete>
+
+	<delete id="deleteBlogAndTag2" parameterType="Long">
+		delete from t_blog_tags where tag_id = #{tag_id}
+	</delete>
+
+	<delete id="deleteBlog" parameterType="Long">
+		delete from t_blog where id=#{id}
+	</delete>
+
+	<update id="updateBlog" parameterType="Blog" >
+		update t_blog set title=#{title},content=#{content},first_picture=#{firstPicture},
+		flag=#{flag},appreciation=#{appreciation},share_statement=#{shareStatement},
+		commentabled=#{commentabled},published=#{published},recommend=#{recommend},
+		update_time=#{updateTime},type_id=#{typeId},tag_ids=#{tagIds},user_id=#{userId},
+		description=#{description} where id=#{id}
+	</update>
+
+	<select id="selectNewRecommendBlogs" resultType="com.cjh.blog.entity2.BlogQuery">
+		select id,title from t_blog where recommend=1 order by now()-update_time limit 6
+	</select>
+
+	<select id="selectNewBlogs" resultType="com.cjh.blog.entity2.BlogQuery">
+		select id,title from t_blog order by now()-update_time limit 3
+	</select>
+
+	<select id="searchBlogs" parameterType="String" resultType="com.cjh.blog.entity2.IndexBlog">
+		select t1.id,t1.title,t1.first_picture,t1.description,t1.update_time,
+		t1.views,t2.avatar,t2.nickname,t3.name typeName from t_blog t1,t_user t2,t_type t3
+		where t1.user_id=t2.id and t1.type_id=t3.id and title like #{str}
+		order by update_time desc
+	</select>
+
+	<resultMap id="detailedBlog_map" type="com.cjh.blog.entity2.DetailedBlog">
+		<id property="id" column="bid"/>
+		<result property="firstPicture" column="first_picture"/>
+		<result property="flag" column="flag"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="views" column="views"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="commentabled" column="commentabled"/>
+		<result property="shareStatement" column="share_statement"/>
+		<result property="appreciation" column="appreciation"/>
+		<result property="nickname" column="nickname"/>
+		<result property="avatar" column="avatar"/>
+		<collection property="tags" ofType="com.cjh.blog.entity.Tag">
+			<id property="id" column="tid"/>
+			<result property="name" column="name"/>
+		</collection>
+	</resultMap>
+
+	<select id="selectDetailedBlog" parameterType="Long" resultMap="detailedBlog_map">
+		select t1.id bid,t1.first_picture,t1.flag,t1.title,t1.content,t1.views,t1.update_time,t1.commentabled,
+		t1.share_statement,t1.appreciation,t2.nickname,t2.avatar,t3.id tid,t3.name from t_blog t1,t_user t2,
+		t_tag t3,t_blog_tags t4 where t1.user_id = t2.id and t4.blog_id=t1.id and t4.tag_id=t3.id
+		and t1.id = #{id}
+
+    </select>
+
+	<update id="changeViews" parameterType="Long">
+		update t_blog set views=views+1 where id=#{id}
+	</update>
+
+	<select id="isExistTagId" parameterType="String" resultType="Long">
+		select count(*) from t_blog where tag_ids like #{tag_id}
+	</select>
+
+	<select id="isExistTypeId" parameterType="Long" resultType="Long">
+		select count(*) from t_blog where type_id=#{type_id}
+	</select>
+</mapper>

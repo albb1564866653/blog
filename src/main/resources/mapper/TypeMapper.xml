@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace：该mapper.xml映射文件的 唯一标识 -->
+<mapper namespace="com.cjh.blog.dao.TypeRepository">
+
+    <select id="selectTypes" resultType="Type">
+		select * from t_type
+	</select>
+
+	<select id="getTypeByName" resultType="Type">
+		select * from t_type where name=#{name}
+	</select>
+
+	<insert id="saveType" parameterType="Type">
+		insert into t_type values (#{id},#{name});
+	</insert>
+
+	<select id="getType" parameterType="Long" resultType="Type">
+		 select * from t_type where id = #{id}
+	</select>
+
+	<update id="updateType" parameterType="Type">
+        update t_type set name = #{name} where id = #{id};
+    </update>
+
+	<delete id="deleteType" parameterType="Long">
+        delete from t_type where id = #{id}
+    </delete>
+
+	<resultMap id="type_blog_map" type="Type">
+		<id property="id" column="tid"></id>
+		<result property="name" column="name"></result>
+		<collection property="blogs" ofType="Blog">
+			<id property="id" column="bid"></id>
+			<result property="title" column="title"></result>
+			<result property="typeId" column="type_id"></result>
+		</collection>
+	</resultMap>
+
+	<select id="selectIndexTypes" resultMap="type_blog_map">
+		select t1.id tid, t1.name,t2.id bid,t2.title,t2.type_id
+		from t_type t1,t_blog t2 where t1.id = t2.type_id
+
+	</select>
+
+	<select id="selectIndexTypes2" resultMap="type_blog_map">
+		select t1.id tid, t1.name,t2.id bid,t2.title,t2.type_id
+		from t_type t1,t_blog t2 where t1.id = t2.type_id
+	</select>
+
+</mapper>

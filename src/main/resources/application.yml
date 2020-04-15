@@ -1,0 +1,29 @@
+#spring:
+#  profiles:
+#    active: dev
+
+#配置数据库
+spring:
+  datasource:
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog
+    username: root
+    password: root
+#配置Mybatis
+mybatis:
+  mapperLocations: classpath:mapper/*.xml #配置mapper.xml映射文件
+  type-aliases-package: com.cjh.blog.entity
+  configuration:
+    map-underscore-to-camel-case: true #命名规则自动转换：stuName->stu_name
+#配置日志
+logging:
+  level:
+    root: info
+    com.cjh.blog: debug
+  file: log/blog-dev.log
+#配置端口号
+server:
+  port: 8888
+
+comment.avatar: /img/avatar.jpg
