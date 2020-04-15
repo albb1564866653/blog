@@ -4,6 +4,8 @@ import com.cjh.blog.entity.User;
 import com.cjh.blog.entity2.BlogQuery;
 import com.cjh.blog.service.BlogService;
 import com.cjh.blog.service.UserService;
+import com.cjh.blog.util.Base64Decode;
+import com.cjh.blog.util.Base64Encode;
 import com.cjh.blog.util.Md5Encode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -38,7 +41,7 @@ public class LoginController {
                 if (temp.getName().equals("rememberInfo")) {
                     String[] loginInfo = temp.getValue().split("-");
                     request.setAttribute("userName",loginInfo[0]);
-                    request.setAttribute("password",loginInfo[1]);
+                    request.setAttribute("password",new String(Base64Decode.base64Decode(loginInfo[1])));
                 }
 
             }
@@ -55,7 +58,8 @@ public class LoginController {
 
         if(remember!=null){//记住密码
             System.out.println(request.getContextPath());
-            Cookie cookie=new Cookie("rememberInfo",username+"-"+password);
+            //将密码进行 base64加密再放进cookie
+            Cookie cookie=new Cookie("rememberInfo",username+"-"+ Base64Encode.base64Encode(password.getBytes()));
             cookie.setMaxAge(60*60*24*31);//一个月
             response.addCookie(cookie);
 
@@ -64,8 +68,6 @@ public class LoginController {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
         }
-
-
 
         User user = userService.checkUser(username, Md5Encode.md5Encode(password));
 
