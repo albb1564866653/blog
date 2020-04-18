@@ -18,7 +18,7 @@ public class Md5Encode {
     }
 	
 	public static void main(String[] args) {
-		String str="123456";
+		String str="12345";
 		str=md5Encode(str);
 		System.out.println("加密后的结果："+str);
 	}
