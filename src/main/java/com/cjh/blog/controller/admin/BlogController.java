@@ -85,31 +85,43 @@ public class BlogController {
     }
 
     //搜索
-    @PostMapping("/blogs/search")
-    public String search(Model model,SearchBlog searchBlog, @RequestParam(value = "pageNum",defaultValue = "1")
+    @GetMapping("/blogs/search")
+//    public String search(Model model,SearchBlog searchBlog
+    public String search(Model model,String title,Long typeId,String recommend, @RequestParam(value = "pageNum",defaultValue = "1")
             Integer pageNum, RedirectAttributes redirectAttributes){
+        SearchBlog searchBlog=new SearchBlog(title,typeId,recommend);
         System.out.println("前端的数据："+searchBlog);
-        PageHelper.startPage(pageNum, 2);
-
+        PageHelper.startPage(pageNum, 5);
+        //=on，=1 才赋值1          =null，=0 赋值0
         if(searchBlog.getRecommend()!=null){
-            searchBlog.setRecommend("1");
-        }else{//复选框选中时是 recommend='on'
+            if(searchBlog.getRecommend().equals("on")||searchBlog.getRecommend().equals("1")){//第一次点搜索传进来的||点分页传进来的
+                searchBlog.setRecommend("1");
+            } else if (searchBlog.getRecommend().equals("0")){//点分页传进来的
+                searchBlog.setRecommend("0");
+            }
+        }else{//第一次点搜索传进来的
             searchBlog.setRecommend("0");
         }
 
+        System.out.println("处理完的searchBlog----------------------"+searchBlog);
         List<BlogQuery> blogs = blogService.searchBlog(searchBlog);
+        System.out.println("==================="+blogs);
+
         PageInfo<BlogQuery> page = new PageInfo<>(blogs);
         model.addAttribute("page", page);
+
+        System.out.println("分页的数据----------------------"+page.getList());
 
         //为了显示下拉框的所有分类信息
         List<Type> types = typeService.selectTypes();
         model.addAttribute("types", types);
+        model.addAttribute("searchBlog", searchBlog);
 
         //搜索到的博客数量
         long blogCount = page.getTotal();
 
         if(blogCount!=0){
-            model.addAttribute("message","查询成功！");
+            model.addAttribute("message","查询结果如下：");
         }else{
             model.addAttribute("message","查询失败，没有找到对应的博客！");
         }

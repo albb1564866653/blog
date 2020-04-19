@@ -97,9 +97,9 @@ public class IndexController {
     }
 
     @RequestMapping("/search")
-    public String search(@RequestParam("query") String query,Model model, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum){
+    public String search(@RequestParam(value = "query") String query,Model model, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum){
         System.out.println("query的值："+query);
-        PageHelper.startPage(pageNum, 10000);
+        PageHelper.startPage(pageNum, 2);
         List<IndexBlog> searchBlogs = blogService.searchBlogs("%" + query + "%");
         PageInfo<IndexBlog> blogPage = new PageInfo<>(searchBlogs);
         model.addAttribute("blogPage", blogPage);

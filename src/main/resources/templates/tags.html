@@ -38,7 +38,7 @@
 			<div class="ui container">
 				
 				<!-- header-->
-				<div class="ui top attached segment">
+				<div class="ui top attached segment animated slideInRight">
 					<div class="ui middle aligned two column grid">
 						<div class="column">
 							<h3 class="ui blue header">标签</h3>
@@ -49,7 +49,7 @@
 					</div>
 				</div>
 				
-				<div class="ui attached segment m-padded-tb-large">
+				<div class="ui attached segment m-padded-tb-large animated slideInRight">
 					
 					<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui basic large label m-margin-tb-tiny" th:classappend="${tag.id==activeTagId} ? 'blue'" th:each="tag : ${tags}">
 						<span th:text="${tag.name}">方法论</span> <div class="detail" th:text="${#arrays.length(tag.blogs)}">20</div>
@@ -57,7 +57,7 @@
 					
 				</div>
 				
-				<div class="ui top attached blue segment">
+				<div class="ui top attached blue segment animated slideInLeft">
 
 					<div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.list}">
 						<div class="ui middle aligned mobile reversed stackable grid">
@@ -80,7 +80,7 @@
 										</div>
 									</div>
 									<div class="right aligned five wide column">
-										<a class="ui green label m-padded-tiny m-text-thin" th:text="${blog.typeName}">认知升级</a>
+										<a class="ui violet basic label m-padded-tiny m-text-thin" th:text="${blog.typeName}">认知升级</a>
 									</div>
 								</div>
 							</div>
@@ -97,19 +97,19 @@
 
 				</div>
 
-				<!-- footer
-				<div class="ui bottom attached segment">
+				<!-- footer-->
+				<div class="ui bottom attached segment animated slideInUp">
 
-					<div class="ui middle aligned two column grid">
-						<div class="column">
-							<a href="#" class="ui button" th:href="@{/tags(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1)}" th:unless="${page.isIsFirstPage()}">上一页</a>
+					<div class="ui middle aligned two column grid" th:each="tag : ${tags}">
+						<div class="column" th:if="${tag.id==activeTagId}">
+							<a href="#" class="ui button" th:href="@{/tags/{id}((id=${activeTagId}),(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1))}" th:unless="${page.isIsFirstPage()}">上一页</a>
 						</div>
-						<div class="right aligned column">
-							<a href="#" class="ui button" th:href="@{/tags(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages})}" th:unless="${page.isIsLastPage()}">下一页</a>
+						<div class="right aligned column" th:if="${tag.id==activeTagId}">
+							<a href="#" class="ui button" th:href="@{/tags/{id}((id=${activeTagId}),(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages}))}" th:unless="${page.isIsLastPage()}">下一页</a>
 						</div>
 					</div>
 
-				</div>-->
+				</div>
 				
 			</div>
 				

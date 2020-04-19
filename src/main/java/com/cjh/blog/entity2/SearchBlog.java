@@ -12,6 +12,12 @@ public class SearchBlog {
     public SearchBlog() {
     }
 
+    public SearchBlog(String title, Long typeId, String recommend) {
+        this.title = title;
+        this.typeId = typeId;
+        this.recommend = recommend;
+    }
+
     public String getTitle() {
         return title;
     }

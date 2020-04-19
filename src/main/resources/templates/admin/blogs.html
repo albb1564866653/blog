@@ -54,7 +54,7 @@
         <p th:text="${message}">操作成功！</p>
       </div>
 
-      <form action="#" method="post" th:action="@{/admin/blogs/search}" class="ui secondary segment form">
+      <form action="#" method="get" th:action="@{/admin/blogs/search}" class="ui secondary segment form">
         <div class="inline fields">
           <div class="field">
             <input type="text" name="title" placeholder="标题">
@@ -111,16 +111,43 @@
         <tfoot>
           <tr>
             <th colspan="6">
-              <div class="ui pagination menu" th:if="${page.getPages()>1}">
-                <a class="icon item" th:href="@{/admin/blogs}" th:unless="${page.isIsFirstPage()}">首页</a>
-                <!--/admin/types?pageNum=?-1-->
-                <a class="icon item" th:href="@{/admin/blogs(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1)}" th:unless="${page.isIsFirstPage()}">上一页</a>
-                <!--/admin/types?pageNum=?+1 -->
-                <a class="icon item" th:href="@{/admin/blogs(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages})}" th:unless="${page.isIsLastPage()}">下一页</a>
-                <a class="icon item" th:href="@{/admin/blogs(pageNum=${page.pages})}" th:unless="${page.isIsLastPage()}">尾页</a>
 
-              </div>
+              <!-- 搜索结果的分页-->
+              <span th:if="${searchBlog}!=null">
+                  <div class="ui pagination menu" th:if="${page.getPages()>1}">
+                    <a class="icon item" th:href="@{/admin/blogs/search(title=${searchBlog.getTitle()},typeId=${searchBlog.getTypeId()},recommend=${searchBlog.getRecommend()})}" th:unless="${page.isIsFirstPage()}">首页</a>
+                    <!--/admin/types?pageNum=?-1-->
+                    <a class="icon item" th:href="@{/admin/blogs/search(title=${searchBlog.getTitle()},typeId=${searchBlog.getTypeId()},recommend=${searchBlog.getRecommend()},(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1))}" th:unless="${page.isIsFirstPage()}">上一页</a>
+                    <!--/admin/types?pageNum=?+1 -->
+                    <a class="icon item" th:href="@{/admin/blogs/search(title=${searchBlog.getTitle()},typeId=${searchBlog.getTypeId()},recommend=${searchBlog.getRecommend()},(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages}))}" th:unless="${page.isIsLastPage()}">下一页</a>
+                    <a class="icon item" th:href="@{/admin/blogs/search(title=${searchBlog.getTitle()},typeId=${searchBlog.getTypeId()},recommend=${searchBlog.getRecommend()},(pageNum=${page.pages}))}" th:unless="${page.isIsLastPage()}">尾页</a>
+
+                  </div>
+
+              </span>
+              <!-- 博客列表的分页-->
+              <span th:if="${searchBlog}==null">
+                  <div class="ui pagination menu" th:if="${page.getPages()>1}">
+                    <a class="icon item" th:href="@{/admin/blogs}" th:unless="${page.isIsFirstPage()}">首页</a>
+                        <!--/admin/types?pageNum=?-1-->
+                    <a class="icon item" th:href="@{/admin/blogs(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1)}" th:unless="${page.isIsFirstPage()}">上一页</a>
+                        <!--/admin/types?pageNum=?+1 -->
+                    <a class="icon item" th:href="@{/admin/blogs(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages})}" th:unless="${page.isIsLastPage()}">下一页</a>
+                    <a class="icon item" th:href="@{/admin/blogs(pageNum=${page.pages})}" th:unless="${page.isIsLastPage()}">尾页</a>
+
+                  </div>
+
+              </span>
+
+            <!-- 没有点搜素-->
+            <span th:if="${searchBlog}==null">
               <a href="#" th:href="@{/admin/blogs/input}" class="ui right floated blue button"><i class="send icon"></i>发布博客</a>
+            </span>
+              <!-- 点了搜素-->
+            <span th:if="${searchBlog}!=null">
+              <a href="#" th:href="@{/admin/blogs}" class="ui right floated blue button"><i class="share icon"></i>返回博客列表</a>
+            </span>
+
             </th>
           </tr>
         </tfoot>

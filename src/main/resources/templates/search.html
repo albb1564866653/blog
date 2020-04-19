@@ -42,7 +42,7 @@
 				<div class="ui top attached segment">
 					<div class="ui middle aligned two column grid">
 						<div class="column">
-							<h3 class="ui teal header">搜索结果</h3>
+							<h3 class="ui blue header">搜索关键字"<span style="color: orange" th:text="${query}"></span>"的结果：</h3>
 						</div>
 						<div class="right aligned column">
 							共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${blogPage.getTotal()}">10</h2> 个
@@ -74,14 +74,14 @@
 										</div>
 									</div>
 									<div class="right aligned five wide column">
-										<a href="#" target="_blank" class="ui green label m-padded-tiny m-text-thin" th:text="${blog.typeName}">认知升级</a>
+										<a href="#" target="_blank" class="ui violet basic label m-padded-tiny m-text-thin" th:text="${blog.typeName}">认知升级</a>
 									</div>
 								</div>
 							</div>
 
-							<div class="five wide column">
+							<div class="five wide column img-box">
 								<a href="#" th:href="@{/blog/{id}/(id=${blog.id})}" target="_blank">
-									<img src="https://picsum.photos/seed/picsum/800/450" th:src="${blog.firstPicture}" alt="" class="ui rounded image">
+									<img src="https://picsum.photos/seed/picsum/800/450" th:src="${blog.firstPicture}" alt="" class="ui rounded image img-hover">
 
 								</a>
 							</div>
@@ -90,19 +90,19 @@
 					</div>
 				</div>
 
-				<!-- footer
+				<!-- footer-->
 				<div class="ui bottom attached segment">
 
 					<div class="ui middle aligned two column grid">
 						<div class="column">
-							<a href="#" id="aBtn" class="ui button" th:href="@{/search(pageNum=${blogPage.isHasPreviousPage()}?${blogPage.getPageNum()-1}:1)}" th:unless="${blogPage.isIsFirstPage()}">上一页</a>
+							<a href="#" id="aBtn" class="ui button" th:href="@{/search(query=${query},(pageNum=${blogPage.isHasPreviousPage()}?${blogPage.getPageNum()-1}:1))}" th:unless="${blogPage.isIsFirstPage()}">上一页</a>
 						</div>
 						<div class="right aligned column">
-							<a href="#" id="bBtn" class="ui button" th:href="@{/search(pageNum=${blogPage.isHasNextPage()}?${blogPage.getPageNum()+1}:${blogPage.pages})}" th:unless="${blogPage.isIsLastPage()}">下一页</a>
+							<a href="#" id="bBtn" class="ui button" th:href="@{/search(query=${query},(pageNum=${blogPage.isHasNextPage()}?${blogPage.getPageNum()+1}:${blogPage.pages}))}" th:unless="${blogPage.isIsLastPage()}">下一页</a>
 						</div>
 					</div>
 
-				</div>-->
+				</div>
 				
 			</div>
 				

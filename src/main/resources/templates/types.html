@@ -38,7 +38,7 @@
 			<div class="ui container">
 
 				<!-- header-->
-				<div class="ui top attached segment">
+				<div class="ui top attached segment animated slideInLeft">
 					<div class="ui middle aligned two column grid">
 						<div class="column">
 							<h3 class="ui blue header">分类</h3>
@@ -49,16 +49,16 @@
 					</div>
 				</div>
 				
-				<div class="ui attached segment m-padded-tb-large">
+				<div class="ui attached segment m-padded-tb-large animated slideInLeft">
 
 					<div class="ui labeled button m-margin-tb-tiny" th:each="type : ${types}">
-						<a href="#" th:href="@{/types/{id}(id=${type.id})}" class="ui basic button" th:classappend="${type.id==activeTypeId} ? 'blue'" th:text="${type.name}">思考与感悟</a>
-						<div class="ui basic left pointing label" th:classappend="${type.id==activeTypeId} ? 'blue'" th:text="${#arrays.length(type.blogs)}">20</div>
+						<a href="#" th:href="@{/types/{id}(id=${type.id})}" class="ui basic button" th:classappend="${type.id==activeTypeId} ? 'violet'" th:text="${type.name}">思考与感悟</a>
+						<div class="ui basic left pointing label" th:classappend="${type.id==activeTypeId} ? 'violet'" th:text="${#arrays.length(type.blogs)}">20</div>
 					</div>
 
 				</div>
 				
-				<div class="ui top attached blue segment">
+				<div class="ui top attached blue segment animated slideInRight">
 
 					<div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.list}">
 						<div class="ui middle aligned mobile reversed stackable grid">
@@ -81,7 +81,7 @@
 										</div>
 									</div>
 									<div class="right aligned five wide column">
-										<a class="ui green label m-padded-tiny m-text-thin" th:text="${blog.typeName}">认知升级</a>
+										<a class="ui violet basic label m-padded-tiny m-text-thin" th:text="${blog.typeName}">认知升级</a>
 									</div>
 								</div>
 							</div>
@@ -99,19 +99,19 @@
 					
 				</div>
 
-				<!-- footer
-				<div class="ui bottom attached segment">
+				<!-- footer-->
+				<div class="ui bottom attached segment animated slideInUp">
 
-					<div class="ui middle aligned two column grid">
-						<div class="column">
-							<a href="#" class="ui button" th:href="@{/types(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1)}" th:unless="${page.isIsFirstPage()}">上一页</a>
+					<div class="ui middle aligned two column grid" th:each="type : ${types}">
+						<div class="column" th:if="${type.id==activeTypeId}">
+							<a href="#" class="ui button" th:href="@{/types/{id}((id=${activeTypeId}),(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1))}" th:unless="${page.isIsFirstPage()}">上一页</a>
 						</div>
-						<div class="right aligned column">
-							<a href="#" class="ui button" th:href="@{/types(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages})}" th:unless="${page.isIsLastPage()}">下一页</a>
+						<div class="right aligned column" th:if="${type.id==activeTypeId}">
+							<a href="#" class="ui button" th:href="@{/types/{id}((id=${activeTypeId}),(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages}))}" th:unless="${page.isIsLastPage()}">下一页</a>
 						</div>
 					</div>
 
-				</div>-->
+				</div>
 
 			</div>
 				

@@ -44,7 +44,7 @@ public class TypeShowController {
         }
         model.addAttribute("types",types);
 
-        PageHelper.startPage(pageNum, 10000);
+        PageHelper.startPage(pageNum, 2);
         List<IndexBlog> blogs = blogService.selectBlogsByTypeId(id);
         PageInfo<IndexBlog> page = new PageInfo<>(blogs);
         model.addAttribute("page", page);

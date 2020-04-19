@@ -7,6 +7,12 @@ import com.cjh.blog.service.UserService;
 import com.cjh.blog.util.Base64Decode;
 import com.cjh.blog.util.Base64Encode;
 import com.cjh.blog.util.Md5Encode;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,39 +75,73 @@ public class LoginController {
             response.addCookie(cookie);
         }
 
-        User user = userService.checkUser(username, Md5Encode.md5Encode(password));
-
-        if(user!=null){
-            user.setPassword(null);
-            session.setAttribute("user",user);
-            session.setMaxInactiveInterval(-1);
+        //1.获取Subject
+        Subject subject = SecurityUtils.getSubject();
+        //2.创建令牌，封装用户数据
+        UsernamePasswordToken token=new UsernamePasswordToken(username, Md5Encode.md5Encode(password));
+        try {
+            //3.登录
+            System.out.println("subject-----------"+subject);
+            subject.login(token);
 
             //最新博客信息
             List<BlogQuery> newBlogs = blogService.selectNewBlogs();
             model.addAttribute("newBlogs", newBlogs);
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            return "admin/index";
-        }else{
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            redirectAttributes.addFlashAttribute("message","用户名或密码错误！");
+            //获取管理员信息，将信息存入session
+            User user = userService.checkUser(username, Md5Encode.md5Encode(password));
+            user.setPassword(null);
+            session.setAttribute("user",user);
+            session.setMaxInactiveInterval(-1);
+        }  catch (UnknownAccountException e) {
+            redirectAttributes.addFlashAttribute("message","用户名错误！");
+//            e.printStackTrace();
+            return "redirect:/admin";
+        } catch (IncorrectCredentialsException e) {
+            redirectAttributes.addFlashAttribute("message","密码错误！");
+//            e.printStackTrace();
+            return "redirect:/admin";
+        }	catch (AuthenticationException e) {
+//            e.printStackTrace();
             return "redirect:/admin";
         }
+        return "admin/index";
+
+//        User user = userService.checkUser(username, Md5Encode.md5Encode(password));
+//
+//        if(user!=null){
+//            user.setPassword(null);
+//            session.setAttribute("user",user);
+//            session.setMaxInactiveInterval(-1);
+//
+//            //最新博客信息
+//            List<BlogQuery> newBlogs = blogService.selectNewBlogs();
+//            model.addAttribute("newBlogs", newBlogs);
+//
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//            return "admin/index";
+//        }else{
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            redirectAttributes.addFlashAttribute("message","用户名或密码错误！");
+//            return "redirect:/admin";
+//        }
 
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
+    public String logout(){
+        System.out.println("==============执行注销============");
+        Subject subject = SecurityUtils.getSubject();
+        //注销，会将session也清除
+        subject.logout();
         return "redirect:/admin";
     }
 }

@@ -48,6 +48,11 @@ class BlogApplicationTests {
     @Test
     void contextLoads() {
         //测试
+        List<Comment> comments = commentRepository.selectCommentsByBlogId((long) 387);
+
+            System.out.println(comments.get(0).getParentComment());
+
+
     }
 
 }

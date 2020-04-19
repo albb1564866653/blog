@@ -51,7 +51,7 @@ public class TagShowController {
         }
         model.addAttribute("tags",tags);
 
-        PageHelper.startPage(pageNum, 10000);
+        PageHelper.startPage(pageNum, 2);
         List<IndexBlog> blogs = blogService.selectBlogsByTagId(id);
         PageInfo<IndexBlog> page = new PageInfo<>(blogs);
         model.addAttribute("page", page);

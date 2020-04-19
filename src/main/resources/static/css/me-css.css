@@ -149,8 +149,7 @@ body{
     color: #333 !important;
 }
 .m-black:hover {
-    color: #906 !important;
-    text-decoration: underline;
+    color: cornflowerblue !important;
 }
 .m-teal {
     color: #00B5AD !important;
@@ -158,7 +157,11 @@ body{
 .m-blue {
     font-family: "微软雅黑";
     font-size: 12px;
-    color: #4c99cf !important;
+    color: #6A6A6A !important;
+}
+
+.m-blue:hover {
+    color: cornflowerblue !important;
 }
 
 .m-mobile-show {

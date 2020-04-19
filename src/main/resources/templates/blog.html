@@ -487,6 +487,8 @@ h5,h6{font-size:1em;}
                 <a class="avatar">
                   <img style="cursor: pointer;width: 35px;height: 35px;" th:title="${comment.nickname}" src="https://picsum.photos/seed/picsum/100/100" th:src="${comment.avatar}">
                 </a>
+                <!--隐藏的昵称 -->
+                <input id="hiddenName" type="hidden" th:value="${comment.nickname}">
                 <div class="content">
 
 <!--                  <a class="author m-blue" th:text="${comment.nickname}">-->
@@ -496,6 +498,9 @@ h5,h6{font-size:1em;}
                   <a class="author">
                     <span class="m-blue" th:text="${comment.nickname}">Matt</span>
                     <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.adminComment}">管理员</div>
+
+                    <span class="m-blue" th:if="${comment.parentComment!=null}" th:text="|@ ${comment.parentComment.nickname}|">@小白</span>
+
                   </a>&nbsp;
 
                   <div class="metadata">
@@ -506,7 +511,7 @@ h5,h6{font-size:1em;}
                   </div>
                   <div class="actions">
                       <!--<i class="eye icon"></i> <span th:text="${blog.views}">999</span>-->
-                      <i class="comment icon"></i>&nbsp;<a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
+                      <i class="comment icon"></i>&nbsp;<a class="reply m-blue" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
                   </div>
                 </div>
 
@@ -608,7 +613,7 @@ h5,h6{font-size:1em;}
             <div class="field m-mobile-wide m-margin-bottom-small">
               <div class="ui left icon input">
                 <i class="user icon"></i>
-                <input type="text" name="nickname" placeholder="姓名" th:value="${session.user}!=null ? ${session.user.nickname}">
+                <input type="text" id="fb-nickname" name="nickname" placeholder="姓名" th:value="${session.user}!=null ? ${session.user.nickname}">
               </div>
             </div>
             <div class="field m-mobile-wide m-margin-bottom-small">
@@ -648,7 +653,6 @@ h5,h6{font-size:1em;}
   <div id="qrcode" class="ui wechat-qr flowing popup transition hidden "style="width: 130px !important;">
     <!--<img src="./static/images/wechat.jpg" alt="" class="ui rounded image" style="width: 120px !important;">-->
   </div>
-
 
 
   <br>
@@ -748,6 +752,7 @@ h5,h6{font-size:1em;}
     });
     
     $('#toTop-button').click(function () {
+
       $(window).scrollTo(0,1000);
     });
 
@@ -796,7 +801,7 @@ h5,h6{font-size:1em;}
       var boo=$('.ui.form').form('validate form');
       if(boo){
         console.log('校验成功');
-        postData();
+          postData();
       }else{
         console.log('校验失败');
       }
@@ -831,8 +836,8 @@ h5,h6{font-size:1em;}
     function reply(obj) {
       var commentId = $(obj).data('commentid');
       var commentNickname = $(obj).data('commentnickname');
-      // $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
-      $("[name='content']").val("回复 @"+commentNickname+"：");
+      $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
+      // $("[name='content']").val("回复 @"+commentNickname+"：");
       $("[name='parentComment.id']").val(commentId);
       $(window).scrollTo($('#comment-form'),500);
     }

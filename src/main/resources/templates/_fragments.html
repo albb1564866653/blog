@@ -14,14 +14,14 @@
 </head>
 <body>
     <!-- 导航inverted-->
-    <nav th:fragment="menu(n)" id="hover-id" class="ui attached segment m-padded-tb-mini m-shadow-small animated fadeIn">
+    <nav th:fragment="menu(n)" id="hover-id" class="ui attached segment m-padded-tb-mini m-shadow-small animated fadeInDown">
 
         <div class="ui container">
             <div class="ui secondary stackable menu">
 
                 <a href="#" th:href="@{/}" class="item">
                     <img class="ui circular image"  th:src="${avatar}" style="width: 60px;height: 60px">
-                    &nbsp;&nbsp;&nbsp;<strong style="color: #9B859D">CJH_BLOG</strong>
+                    &nbsp;&nbsp;&nbsp;<strong style="color: rebeccapurple">CJH_BLOG</strong>
                 </a>
 
 <!--                <a th:href="@{/}"><h2 class="ui orange header item">Blog</h2></a>-->
@@ -52,7 +52,7 @@
     </nav>
 
     <!-- 底部-->
-    <footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive animated fadeIn">
+    <footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive animated slideInUp">
         <div class="ui center aligned container">
             <div class="ui inverted divided stackable grid">
                 <div class="three wide column">
