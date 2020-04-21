@@ -34,20 +34,20 @@
 		</nav>
 		
 		<!-- 中间内容-->
-		<div class="m-container m-padded-tb-big animated fadeInDown">
+		<div class="m-container m-padded-tb-big">
 			
 			<div class="ui container">
 				
 				<div class="ui stackable grid">
-					<div class="eleven wide column">
+					<div class="eleven wide column animated bounceInLeft">
 						<div class="ui">
 							<img src="http://img01.jituwang.com/190929/256492-1Z9291U50882.jpg" alt="" class="ui rounded image">
 
 						</div>
 					</div>
-					<div class="five wide column">
+					<div class="five wide column animated bounceInRight">
 						<div class="ui top attached segment">
-							<div class="ui header">关于我</div>
+							<div class="ui blue header">关于我</div>
 						</div>
 						<div class="ui attached segment">
 							<p class="m-text">Hello,friend</p>
@@ -85,8 +85,7 @@
 		</div>
 		<br />
 		<br />
-
-		
+	
 		<!-- 底部-->
 		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
 			<div class="ui center aligned container">
@@ -131,7 +130,7 @@
 		<!--		/*/</th:block>/*/-->
 	
 	<script>
-		
+
 		$('.menu.toggle').click(function(){
 			$('.m-item').toggleClass('m-mobile-hide');
 		})

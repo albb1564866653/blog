@@ -54,35 +54,37 @@
         <p th:text="${message}">操作成功！</p>
       </div>
 
-      <form action="#" method="get" th:action="@{/admin/blogs/search}" class="ui secondary segment form">
-        <div class="inline fields">
-          <div class="field">
-            <input type="text" name="title" placeholder="标题">
-          </div>
-          <div class="field">
-            <div class="ui selection dropdown">
-              <input type="hidden" name="typeId">
-              <i class="dropdown icon"></i>
-              <div class="default text">分类</div>
-              <div class="menu" >
-                <div class="item" data-value="1" th:each="type : ${types}" th:data-value="${type.id}" th:text="${type.name}">错误日志</div>
+      <span th:if="${searchBlog}==null">
+          <form action="#" method="get" th:action="@{/admin/blogs/search}" class="ui secondary segment form">
+            <div class="inline fields">
+              <div class="field">
+                <input type="text" name="title" placeholder="标题">
+              </div>
+              <div class="field">
+                <div class="ui selection dropdown">
+                  <input type="hidden" name="typeId">
+                  <i class="dropdown icon"></i>
+                  <div class="default text">分类</div>
+                  <div class="menu" >
+                    <div class="item" data-value="1" th:each="type : ${types}" th:data-value="${type.id}" th:text="${type.name}">错误日志</div>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" id="recommend" name="recommend">
+                  <label for="recommend">推荐</label>
+                </div>
+              </div>
+              <div class="field">
+                <button class="ui blue button"><i class="search icon"></i>搜索</button>
               </div>
             </div>
-          </div>
-          <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" id="recommend" name="recommend">
-              <label for="recommend">推荐</label>
-            </div>
-          </div>
-          <div class="field">
-            <button class="ui blue button"><i class="search icon"></i>搜索</button>
-          </div>
-        </div>
 
-        <!-- 放置表单验证的提示信息 -->
-        <div class="ui error message"></div>
-      </form>
+            <!-- 放置表单验证的提示信息 -->
+            <div class="ui error message"></div>
+          </form>
+        </span>
 
       <table class="ui compact blue table">
         <thead>

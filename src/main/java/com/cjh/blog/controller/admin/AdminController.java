@@ -44,7 +44,6 @@ public class AdminController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        session.invalidate();
         return "redirect:/admin";
     }
 }

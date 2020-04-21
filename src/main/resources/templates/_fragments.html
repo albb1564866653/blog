@@ -14,7 +14,7 @@
 </head>
 <body>
     <!-- 导航inverted-->
-    <nav th:fragment="menu(n)" id="hover-id" class="ui attached segment m-padded-tb-mini m-shadow-small animated fadeInDown">
+    <nav th:fragment="menu(n)" id="hover-id" class="ui attached segment m-padded-tb-mini m-shadow-small border-transparent animated fadeInDown">
 
         <div class="ui container">
             <div class="ui secondary stackable menu">
@@ -37,7 +37,7 @@
         <!--                    <div class="ui icon transparent input">-->
                                     <input class="prompt" type="text" name="query" placeholder="输入博客标题..." th:value="${query}"/>
         <!--                            <i onclick="document.forms['search'].submit()" class="search link icon"></i>-->
-                                    <i id="query" class="search link circular  icon"></i>
+                                    <i id="query" class="search link icon"></i>
                                 </div>
                             </div>
 
@@ -52,7 +52,7 @@
     </nav>
 
     <!-- 底部-->
-    <footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive animated slideInUp">
+    <footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive border-transparent animated slideInUp">
         <div class="ui center aligned container">
             <div class="ui inverted divided stackable grid">
                 <div class="three wide column">
@@ -104,7 +104,6 @@
         <script src="../static/js/jquery-3.3.1.js" th:src="@{/js/jquery-3.3.1.js}"></script>
         <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
-
         <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
         <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
         <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
@@ -112,6 +111,7 @@
 <!--        <script>-->
 <!--            $('#newBlog-container').load(/*[[@{/footer/newBlog}]]*/"/footer/newblog");-->
 <!--        </script>-->
+
     </th:block>
 
 

@@ -13,6 +13,7 @@
 </head>
 <body>
 <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+
   <!--导航-->
   <nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
     <div class="ui container">
@@ -497,7 +498,7 @@ h5,h6{font-size:1em;}
 
                   <a class="author">
                     <span class="m-blue" th:text="${comment.nickname}">Matt</span>
-                    <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.adminComment}">管理员</div>
+                    <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.adminComment}">站长</div>
 
                     <span class="m-blue" th:if="${comment.parentComment!=null}" th:text="|@ ${comment.parentComment.nickname}|">@小白</span>
 
@@ -511,7 +512,7 @@ h5,h6{font-size:1em;}
                   </div>
                   <div class="actions">
                       <!--<i class="eye icon"></i> <span th:text="${blog.views}">999</span>-->
-                      <i class="comment icon"></i>&nbsp;<a class="reply m-blue" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
+                      <i class="white comment outline icon"></i>&nbsp;<a class="reply m-blue" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
                   </div>
                 </div>
 
@@ -607,7 +608,7 @@ h5,h6{font-size:1em;}
           <input type="hidden" name="blog.id" th:value="${blog.id}"/>
           <input type="hidden" name="parentComment.id" value="-1"/>
           <div class="field">
-            <textarea name="content" placeholder="请输入评论信息..."></textarea>
+            <textarea name="content" placeholder="请文明发言..."></textarea>
           </div>
           <div class="fields">
             <div class="field m-mobile-wide m-margin-bottom-small">
@@ -761,7 +762,7 @@ h5,h6{font-size:1em;}
       element: document.getElementById('waypoint'),
       handler: function(direction) {
         if (direction == 'down') {
-          $('#toolbar').show(100);
+          $('#toolbar').show(500);
         } else {
           $('#toolbar').hide(500);
         }
@@ -830,14 +831,13 @@ h5,h6{font-size:1em;}
       // $("[name='nickname']").val('');
       // $("[name='email']").val('');
       $("[name='parentComment.id']").val(-1);
-      $("[name='content']").attr("placeholder", "请输入评论信息...");
+      $("[name='content']").attr("placeholder", "请文明发言...");
     }
 
     function reply(obj) {
       var commentId = $(obj).data('commentid');
       var commentNickname = $(obj).data('commentnickname');
-      $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
-      // $("[name='content']").val("回复 @"+commentNickname+"：");
+      $("[name='content']").attr("placeholder", "回复 @"+commentNickname).focus();
       $("[name='parentComment.id']").val(commentId);
       $(window).scrollTo($('#comment-form'),500);
     }
