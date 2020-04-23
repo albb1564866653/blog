@@ -30,6 +30,7 @@
                 <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
 <!--                <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="clone icon"></i>归档</a>-->
                 <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="info icon"></i>关于我</a>
+                <a href="#" th:href="@{/admin}" class="m-item item m-mobile-hide" target="_blank"><i class="lock icon"></i>网站后台</a>
                 <div class="right m-item item m-mobile-hide">
                         <form name="search" action="#" method="post" th:action="@{/search}" target="_blank">
                             <div class="ui search">
@@ -58,7 +59,7 @@
                 <div class="three wide column">
                     <div class="ui inverted link list">
                         <div class="item">
-                            <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.JPG}" class="ui rounded image" alt="" style="width: 110px;">
+                            <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.jpg}" class="ui rounded image" alt="" style="width: 110px;">
                         </div>
                     </div>
                 </div>
@@ -91,7 +92,7 @@
                 </div>
                 <div class="seven wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced ">Blog</h4>
-                    <p class="m-text-thin m-text-spaced m-opacity-mini">这是我的个人博客，会分享编程、JavaEE技术栈的知识点以及相关内容，希望我分享的内容对大家有所帮助...</p>
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">我的知识来自网络，建立博客是为了记录学习知识以及积累实战经验,也是将知识回馈给网络上有所需要的朋友...</p>
                 </div>
             </div>
             <div class="ui inverted section divider"></div>

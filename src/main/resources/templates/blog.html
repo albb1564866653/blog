@@ -433,7 +433,7 @@ h5,h6{font-size:1em;}
 
         <!--标签-->
         <div class="m-padded-lr-responsive">
-          <div class="ui basic blue left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</div>
+          <div class="ui tag left label" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</div>
         </div>
 
         <!--赞赏-->
@@ -446,11 +446,11 @@ h5,h6{font-size:1em;}
             <div class="ui orange basic label">
               <div class="ui images" style="font-size: inherit !important;">
                 <div class="image">
-                  <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.JPG}" alt="" class="ui rounded bordered image" style="width: 120px">
+                  <img src="../static/img/wechat.JPG" th:src="@{/img/zhifubao.png}" alt="" class="ui rounded bordered image" style="width: 120px">
                   <div>支付宝</div>
                 </div>
                 <div class="image">
-                  <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.JPG}" alt="" class="ui rounded bordered image" style="width: 120px">
+                  <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
                   <div>微信</div>
                 </div>
               </div>
@@ -473,7 +473,7 @@ h5,h6{font-size:1em;}
             </ui>
           </div>
           <div class="five wide column">
-            <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.JPG}" alt="" class="ui right floated rounded bordered image" style="width: 110px">
+            <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.jpg}" alt="" class="ui right floated rounded bordered image" style="width: 110px">
           </div>
         </div>
       </div>
@@ -614,13 +614,13 @@ h5,h6{font-size:1em;}
             <div class="field m-mobile-wide m-margin-bottom-small">
               <div class="ui left icon input">
                 <i class="user icon"></i>
-                <input type="text" id="fb-nickname" name="nickname" placeholder="姓名" th:value="${session.user}!=null ? ${session.user.nickname}">
+                <input type="text" id="fb-nickname" name="nickname" placeholder="姓名(必填*)" th:value="${session.user}!=null ? ${session.user.nickname}">
               </div>
             </div>
             <div class="field m-mobile-wide m-margin-bottom-small">
               <div class="ui left icon input">
                 <i class="mail icon"></i>
-                <input type="text" name="email" placeholder="邮箱" th:value="${session.user}!=null ? ${session.user.email}">
+                <input type="text" name="email" placeholder="邮箱(必填*)" th:value="${session.user}!=null ? ${session.user.email}">
               </div>
             </div>
             <div class="field  m-margin-bottom-small m-mobile-wide">
@@ -741,7 +741,7 @@ h5,h6{font-size:1em;}
       position: 'left center'
     });
 
-    var serurl=/*[[#{blog.serurl}]]*/"http://192.168.2.110:8888";
+    var serurl=/*[[#{blog.serurl}]]*/"http://129.204.164.33:8080";
     var url=/*[[@{/blog/{id}(id=${blog.id})}]]*/"";
     var qrcode = new QRCode("qrcode", {
       text: serurl+url,//扫码跳转的地址

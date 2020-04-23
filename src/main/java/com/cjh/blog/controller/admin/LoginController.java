@@ -22,13 +22,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sun.text.normalizer.NormalizerBase;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -68,6 +66,7 @@ public class LoginController {
         //2.创建令牌，封装用户数据
         UsernamePasswordToken token=new UsernamePasswordToken(username, Md5SaltEncode.md5Hash(password,username,3));
         try {
+
             //3.登录
             System.out.println("subject-----------"+subject);
             subject.login(token);
@@ -93,6 +92,8 @@ public class LoginController {
             user.setPassword(null);
             session.setAttribute("user",user);
             session.setMaxInactiveInterval(-1);
+
+
         }  catch (UnknownAccountException e) {
             redirectAttributes.addFlashAttribute("message","用户名不存在哦！");
 //            e.printStackTrace();

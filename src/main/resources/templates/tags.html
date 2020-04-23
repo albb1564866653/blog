@@ -34,7 +34,7 @@
 		</nav>
 		
 		<!-- 中间内容-->
-		<div class="m-container-small m-padded-tb-big animated slideInDown">
+		<div class="m-container-small m-padded-tb-big animated bounceInDown">
 			<div class="ui container">
 				
 				<!-- header-->
@@ -51,7 +51,7 @@
 				
 				<div class="ui attached segment m-padded-tb-large">
 					
-					<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui basic large label m-margin-tb-tiny" th:classappend="${tag.id==activeTagId} ? 'blue'" th:each="tag : ${tags}">
+					<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui tag large label m-margin-tb-tiny" th:classappend="${tag.id==activeTagId} ? 'blue'" th:each="tag : ${tags}">
 						<span th:text="${tag.name}">方法论</span> <div class="detail" th:text="${#arrays.length(tag.blogs)}">20</div>
 					</a>
 					

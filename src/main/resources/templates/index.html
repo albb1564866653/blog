@@ -150,8 +150,8 @@
 						</div>
 
 						<div class="ui blue segment">
-							<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" target="_blank" th:each="tag : ${tags}" class="ui blue basic label m-margin-tb-tiny">
-								<span th:text="${tag.name}">方法论</span><div class="detail" th:text="${tag.blogs.size()}">23</div>
+							<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" target="_blank" th:each="tag : ${tags}" class="ui tag label m-margin-tb-tiny">
+								<span th:text="${tag.name}">方法论</span><div class="detail" th:text="${tag.blogs.size()}" style="color: darkviolet">23</div>
 <!--								<div class="detail" th:text="${tag.blogs.size()}">20</div>-->
 							</a>
 							<!--/*
@@ -186,9 +186,9 @@
 					</div>
 
 					<!-- 二维码-->
-					<h4 class="ui horizontal divider header m-margin-top-large">扫码关注我</h4>
+					<h4 class="ui horizontal divider header m-margin-top-large">联系站长</h4>
 					<div class="ui centered card"  style="width: 10em">
-						<img src="../static/img/wechat.JPG" th:src="@{/img/wechat.JPG}" alt="" class="ui rounded image">
+						<img src="../static/img/wechat.JPG" th:src="@{/img/wechat.jpg}" alt="" class="ui rounded image">
 					</div>
 
 
