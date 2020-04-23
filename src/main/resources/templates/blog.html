@@ -499,8 +499,7 @@ h5,h6{font-size:1em;}
                   <a class="author">
                     <span class="m-blue" th:text="${comment.nickname}">Matt</span>
                     <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.adminComment}">站长</div>
-
-                    <span class="m-blue" th:if="${comment.parentComment!=null}" th:text="|@ ${comment.parentComment.nickname}|">@小白</span>
+                      <span class="m-blue" th:if="${comment.parentComment!=null}" th:text="|回复 ${comment.parentComment.nickname}|">@小白</span>
 
                   </a>&nbsp;
 
