@@ -6,6 +6,8 @@ import com.cjh.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,5 +33,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getAvatar() {
         return userRepository.getAvatar();
+    }
+
+    @Override
+    public int addUser(User user) {
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        return userRepository.addUser(user);
     }
 }

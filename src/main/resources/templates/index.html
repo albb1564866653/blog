@@ -34,7 +34,7 @@
 			<i class="sidebar icon"></i>
 		</a>
 	</nav>
-
+	<br/>
 	<!-- 中间内容-->
 	<div class="m-container m-padded-tb-big animated" style="word-break: break-all">
 		<div class="ui container">
@@ -152,23 +152,8 @@
 						<div class="ui blue segment">
 							<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" target="_blank" th:each="tag : ${tags}" class="ui tag label m-margin-tb-tiny">
 								<span th:text="${tag.name}">方法论</span><div class="detail" th:text="${tag.blogs.size()}" style="color: darkviolet">23</div>
-<!--								<div class="detail" th:text="${tag.blogs.size()}">20</div>-->
-							</a>
-							<!--/*
-							 <a href="#" target="_blank" class="ui blue basic label m-margin-tb-tiny">
-								方法论 <div class="detail">20</div>
-							</a>
-							<a href="#" target="_blank" class="ui blue basic label m-margin-tb-tiny">
-								方法论 <div class="detail">20</div>
-							</a>
-							<a href="#" target="_blank" class="ui blue basic label m-margin-tb-tiny">
-								方法论 <div class="detail">20</div>
-							</a>
-							<a href="#" target="_blank" class="ui blue basic label m-margin-tb-tiny">
-								方法论 <div class="detail">20</div>
 							</a>
 
-							 */-->
 						</div>
 					</div>
 
@@ -260,7 +245,9 @@
 			}
 
 		})
-
+		$('.ui.dropdown').dropdown({
+			on : 'hover'
+		});
 
 	  </script>
 	

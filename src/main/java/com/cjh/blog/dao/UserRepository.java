@@ -13,4 +13,6 @@ public interface UserRepository {
     int updateUserInfo(User user);
 
     String getAvatar();
+
+    int addUser(User user);
 }

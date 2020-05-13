@@ -36,7 +36,7 @@
       <i class="sidebar icon"></i>
     </a>
   </nav>
-
+<br/>
   <!--中间内容-->
   <div id="waypoint" class="m-container-small m-padded-tb-big animated fadeInDown" style="word-break: break-all">
     <div class="ui container">
@@ -603,25 +603,31 @@ h5,h6{font-size:1em;}
           </div>
 
         </div>
-        <div id="comment-form" class="ui form">
+
+        <div th:if="${session.theUser==null}">
+          <a href="#" th:href="@{/user/toLogin}">登录</a>后可发言！
+        </div>
+
+        <div id="comment-form" class="ui form" th:if="${session.theUser}!=null">
+
           <input type="hidden" name="blog.id" th:value="${blog.id}"/>
           <input type="hidden" name="parentComment.id" value="-1"/>
           <div class="field">
-            <textarea name="content" placeholder="请文明发言..."></textarea>
+            <textarea name="content" placeholder="说点什么..."></textarea>
           </div>
           <div class="fields">
-            <div class="field m-mobile-wide m-margin-bottom-small">
-              <div class="ui left icon input">
-                <i class="user icon"></i>
-                <input type="text" id="fb-nickname" name="nickname" placeholder="姓名(必填*)" th:value="${session.user}!=null ? ${session.user.nickname}">
-              </div>
-            </div>
-            <div class="field m-mobile-wide m-margin-bottom-small">
-              <div class="ui left icon input">
-                <i class="mail icon"></i>
-                <input type="text" name="email" placeholder="邮箱(必填*)" th:value="${session.user}!=null ? ${session.user.email}">
-              </div>
-            </div>
+<!--            <div class="field m-mobile-wide m-margin-bottom-small">-->
+<!--              <div class="ui left icon input">-->
+<!--                <i class="user icon"></i>-->
+<!--                <input type="text" id="fb-nickname" name="nickname" placeholder="姓名(必填*)" th:value="${session.user}!=null ? ${session.user.nickname}">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="field m-mobile-wide m-margin-bottom-small">-->
+<!--              <div class="ui left icon input">-->
+<!--                <i class="mail icon"></i>-->
+<!--                <input type="text" name="email" placeholder="邮箱(必填*)" th:value="${session.user}!=null ? ${session.user.email}">-->
+<!--              </div>-->
+<!--            </div>-->
             <div class="field  m-margin-bottom-small m-mobile-wide">
               <button id="commentpost-btn" type="button" class="ui blue button m-mobile-wide"><i class="edit icon"></i>发布</button>
             </div>
@@ -816,8 +822,8 @@ h5,h6{font-size:1em;}
       $("#comment-container").load(/*[[@{/comments}]]*/"",{
         "parentComment.id" : $("[name='parentComment.id']").val(),
         "blog.id" : $("[name='blog.id']").val(),
-        "nickname": $("[name='nickname']").val(),
-        "email"   : $("[name='email']").val(),
+        // "nickname": $("[name='nickname']").val(),
+        // "email"   : $("[name='email']").val(),
         "content" : $("[name='content']").val()
       },function (responseTxt, statusTxt, xhr) {
        $(window).scrollTo($('#comment-container'),500);
@@ -850,6 +856,10 @@ h5,h6{font-size:1em;}
       }
 
     })
+
+    $('.ui.dropdown').dropdown({
+      on : 'hover'
+    });
 
   </script>
 </body>

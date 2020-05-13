@@ -10,4 +10,6 @@ public interface UserService {
     int updateUserInfo(User user);
 
     String getAvatar();
+
+    int addUser(User user);
 }

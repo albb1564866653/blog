@@ -27,9 +27,9 @@ public class Md5SaltEncode {
 
 	
 	public static void main(String[] args) {
-		String pwd="666455";
+		String pwd="123456";
 		System.out.println("md5加密1："+md5Hash(pwd, "admin"));
-		System.out.println("md5加密2："+md5Hash(pwd, "cjh111111",3));
+		System.out.println("md5加密2："+md5Hash(pwd, "zs123",3));
 	}	
 
 }

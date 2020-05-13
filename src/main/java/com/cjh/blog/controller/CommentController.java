@@ -36,6 +36,11 @@ public class CommentController {
     @PostMapping("/comments")
     public String post(Comment comment, HttpSession session){
         System.out.println("进入comments控制器....");
+        //--------------
+        User theUser = (User) session.getAttribute("theUser");
+        comment.setNickname(theUser.getNickname());
+        comment.setEmail(theUser.getEmail());
+//------------------------
         Long blogId=comment.getBlog().getId();
         comment.setBlog(blogService.selectBlogById(blogId));
 

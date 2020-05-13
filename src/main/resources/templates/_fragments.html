@@ -19,20 +19,20 @@
         <div class="ui container">
             <div class="ui secondary stackable menu">
 
-                <a href="#" th:href="@{/}" class="item">
-                    <img class="ui circular image"  th:src="${avatar}" style="width: 60px;height: 60px">
-                    &nbsp;&nbsp;&nbsp;<strong style="color: rebeccapurple">CJH_BLOG</strong>
-                </a>
+<!--                <a href="#" th:href="@{/}" class="item">-->
+<!--                    <img class="ui circular image"  th:src="${avatar}" style="width: 60px;height: 60px">-->
+<!--                    &nbsp;&nbsp;&nbsp;<strong style="color: rebeccapurple">CJH_BLOG</strong>-->
+<!--                </a>-->
 
-<!--                <a th:href="@{/}"><h2 class="ui orange header item">Blog</h2></a>-->
+                <a th:href="@{/}"><h2 class="ui blue header item">BLOG</h2></a>
                 <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>首页</a>
                 <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="book icon"></i>分类</a>
                 <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
 <!--                <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="clone icon"></i>归档</a>-->
                 <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="info icon"></i>关于我</a>
                 <a href="#" th:href="@{/admin}" class="m-item item m-mobile-hide" target="_blank"><i class="lock icon"></i>网站后台</a>
-                <div class="right m-item item m-mobile-hide">
-                        <form name="search" action="#" method="post" th:action="@{/search}" target="_blank">
+                <div class="left m-item item m-mobile-hide">
+                        <form name="search" action="#" method="get" th:action="@{/search}" target="_blank">
                             <div class="ui search">
                                 <div class="ui icon input">
         <!--                    <div class="ui icon transparent input">-->
@@ -44,6 +44,27 @@
 
                         </form>
                 </div>
+
+
+                    <a href="#" th:if="${session.theUser}==null" th:href="@{/user/toLogin}" class="m-item item m-mobile-hide" ><i class="sign in icon"></i>登录</a>
+                    <a href="#"  th:if="${session.theUser}==null" th:href="@{/user/toRegister}" class="left m-item item m-mobile-hide" ><i class="pointing right icon"></i>注册</a>
+
+                <div class="left m-item m-mobile-hide menu" th:if="${session.theUser}!=null">
+                    <div class="ui dropdown item">
+                        <img class="ui avatar image" th:src="${session.theUser.avatar}" style="width: 40px;height: 40px">&nbsp;&nbsp;
+                        <span th:text="${session.theUser.nickname}">陈嘉煌</span>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="#" th:href="@{/user/logout}" class="item"><i class="sign out icon"></i>注销</a>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
             </div>
         </div>
 
@@ -72,15 +93,6 @@
                         </a>
                     </div>
 
-<!--                    <div id="newBlog-container">-->
-
-<!--                        <div class="ui inverted link list" th:fragment="newBlogList">-->
-<!--                            <a href="#" target="_blank" th:href="@{/blog/{id}/(id=${newBlog.id})}" class="item m-text-thin" th:each="newBlog : ${newBlogs}">-->
-<!--                                <span th:text="${newBlog.title}">用户故事（User Story）</span>-->
-<!--                            </a>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
 
                 </div>
                 <div class="three wide column">
@@ -109,9 +121,6 @@
         <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
         <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
         <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
-<!--        <script>-->
-<!--            $('#newBlog-container').load(/*[[@{/footer/newBlog}]]*/"/footer/newblog");-->
-<!--        </script>-->
 
     </th:block>
 

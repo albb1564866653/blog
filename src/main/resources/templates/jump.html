@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>success</title>
+</head>
+<body>
+<script src="../static/js/jquery-3.3.1.js" th:src="@{/js/jquery-3.3.1.js}"></script>
+<br/>
+&nbsp;注册成功，正在跳转...
+<input id="lastUrl" type="hidden" th:value="${lastUrl}"/>
+<script th:inline="javascript">
+    var lastUrl=$('#lastUrl').val();
+    //判断url是否包含这个请求地址
+    if(lastUrl.indexOf("/user/toRegister")!=-1){
+        lastUrl="/";
+    }
+    // alert(lastUrl)
+    var openid=[[${openid}]];
+
+    var url=lastUrl;
+    setTimeout('location.href=url', 3000);
+</script>
+
+
+
+</body>
+</html>

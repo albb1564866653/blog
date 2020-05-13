@@ -19,6 +19,11 @@
 	</update>
 
 	<select id="getAvatar" resultType="String">
-		select avatar from t_user;
+		select avatar from t_user where type=1;
 	</select>
+
+	<insert id="addUser" parameterType="User">
+		insert into t_user (nickname,username,password,email,avatar,type,create_time,update_time) values
+		(#{nickname},#{username},#{password},#{email},#{avatar},#{type},#{createTime},#{updateTime})
+	</insert>
 </mapper>
