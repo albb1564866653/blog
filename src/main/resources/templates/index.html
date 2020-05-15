@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="../static/css/me-css.css" th:href="@{/css/me-css.css}"/>
 	</head>
 	<body>
-	<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+
 <!-- 导航-->
 	<nav th:replace="_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
 		<div class="ui container">
@@ -36,7 +36,7 @@
 	</nav>
 	<br/>
 	<!-- 中间内容-->
-	<div class="m-container m-padded-tb-big animated" style="word-break: break-all">
+	<div class="m-container m-padded-tb-big animated me-main" style="word-break: break-all">
 		<div class="ui container">
 			<div class="ui stackable grid">
 				<div class="eleven wide column animated bounceInLeft"><!-- 左边部分-->
@@ -182,8 +182,6 @@
 		</div>
 
 	</div>
-	<br />
-	<br />
 
 	<!-- 底部-->
 	<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
@@ -224,32 +222,12 @@
 
 	</footer>
 		
-<!--		/*/<th:block th:replace="_fragments :: script">/*/--> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
-			<script src="../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
-			<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
-<!--		/*/</th:block>/*/-->
+	<th:block th:replace="_fragments :: script"> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
+				<script src="../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
+				<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 
-		
+	</th:block>
 
-	<script>
-	    $('.menu.toggle').click(function () {
-	      $('.m-item').toggleClass('m-mobile-hide');
-	    });
-
-		$("#query").click(function () {
-			var queryInput=$("#query").prev().val();
-			if(queryInput!=''){
-				document.forms['search'].submit();
-			}else{
-				alert("请输入博客标题！");
-			}
-
-		})
-		$('.ui.dropdown').dropdown({
-			on : 'hover'
-		});
-
-	  </script>
 	
 	</body>
 </html>

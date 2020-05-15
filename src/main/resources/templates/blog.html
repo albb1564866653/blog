@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="../static/css/me-css.css">
 </head>
 <body>
-<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 
   <!--导航-->
   <nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
@@ -38,7 +37,7 @@
   </nav>
 <br/>
   <!--中间内容-->
-  <div id="waypoint" class="m-container-small m-padded-tb-big animated fadeInDown" style="word-break: break-all">
+  <div id="waypoint" class="m-container-small m-padded-tb-big animated fadeInDown me-main" style="word-break: break-all">
     <div class="ui container">
       <div class="ui top attached segment">
         <div class="ui horizontal link list">
@@ -660,9 +659,6 @@ h5,h6{font-size:1em;}
     <!--<img src="./static/images/wechat.jpg" alt="" class="ui rounded image" style="width: 120px !important;">-->
   </div>
 
-
-  <br>
-  <br>
   <!--底部footer-->
   <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -700,7 +696,7 @@ h5,h6{font-size:1em;}
 
   </footer>
 
-  <!--/*/<th:block th:replace="_fragments :: script">/*/--> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
+  <th:block th:replace="_fragments :: script"> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
   <script src="../static/js/jquery-3.3.1.js"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
@@ -709,7 +705,7 @@ h5,h6{font-size:1em;}
   <script src="../static/lib/tocbot/tocbot.min.js"></script>
   <script src="../static/lib/qrcode/qrcode.min.js"></script>
   <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
-  <!--/*/</th:block>/*/-->
+  </th:block>
 
 
 
@@ -847,19 +843,6 @@ h5,h6{font-size:1em;}
       $(window).scrollTo($('#comment-form'),500);
     }
 
-    $("#query").click(function () {
-      var queryInput=$("#query").prev().val();
-      if(queryInput!=''){
-        document.forms['search'].submit();
-      }else{
-        alert("请输入博客标题！");
-      }
-
-    })
-
-    $('.ui.dropdown').dropdown({
-      on : 'hover'
-    });
 
   </script>
 </body>

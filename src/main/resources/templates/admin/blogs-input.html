@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="../../static/css/me-css.css" th:href="@{/css/me-css.css}">
 </head>
 <body>
-<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
   <!--导航-->
   <nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
     <div class="ui container">
@@ -46,7 +45,7 @@
   </div>
 
   <!--中间内容-->
-  <div  class="m-container m-padded-tb-big">
+  <div  class="m-container m-padded-tb-big me-main">
     <div class="ui container">
       <form id="blog-form" action="#" th:action="${updatePage}!=null ? @{/admin/blogs/update} : @{/admin/blogs/add}" method="post" class="ui form">
           <input type="hidden" name="publishedAdminId" th:value="${session.user.id}">
@@ -158,8 +157,6 @@
     </div>
   </div>
 
-  <br>
-  <br>
   <!--底部footer-->
   <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -197,14 +194,14 @@
 
   </footer>
 
-  <!--		/*/<th:block th:replace="admin/_fragments :: script">/*/--> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
+  <th:block th:replace="admin/_fragments :: script"><!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
   <script src="../../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
   <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
-  <!--		/*/</th:block>/*/-->
-  <script src="../../static/js/jquery-1.12.4.js"></script>
-  <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
-  <script src="../../static/lib/editormd/editormd.min.js"></script>
+  </th:block>
+<!--  <script src="../../static/js/jquery-1.12.4.js"></script>-->
+<!--  <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>-->
+<!--  <script src="../../static/lib/editormd/editormd.min.js"></script>-->
   <script>
 
     function createRandomId() {

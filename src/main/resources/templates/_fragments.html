@@ -36,7 +36,7 @@
                             <div class="ui search">
                                 <div class="ui icon input">
         <!--                    <div class="ui icon transparent input">-->
-                                    <input class="prompt" type="text" name="query" placeholder="输入博客标题..." th:value="${query}"/>
+                                    <input class="prompt" id="zxc" type="text" name="query" placeholder="输入博客标题..." th:value="${query}"/>
         <!--                            <i onclick="document.forms['search'].submit()" class="search link icon"></i>-->
                                     <i id="query" class="search link icon"></i>
                                 </div>
@@ -121,7 +121,41 @@
         <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
         <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
         <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+        <script th:src="@{/js/mouse-events.js}"></script>
+        <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 
+        <script>
+            $('.menu.toggle').click(function () {
+                $('.m-item').toggleClass('m-mobile-hide');
+            });
+
+            $("#query").click(function () {
+                var queryInput=$("#query").prev().val();
+                if(queryInput!=''){
+                    document.forms['search'].submit();
+                }else{
+                    alert("请输入博客标题！");
+                }
+
+            })
+
+            $('#zxc').keydown(function(event){
+
+                if(event.keyCode==13){
+                    if($('#zxc').val()==""){
+                        alert("请输入博客标题！");
+                        return false;
+                    }else{
+                        $("#query").click();
+                    }
+
+                }
+            })
+            $('.ui.dropdown').dropdown({
+                on : 'hover'
+            });
+
+        </script>
     </th:block>
 
 

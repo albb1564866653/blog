@@ -1,3 +1,4 @@
+
 body{
 	background: url(../img/bg.png);
     /*height: 100%;*/
@@ -194,10 +195,17 @@ body{
     overflow: hidden;
 }
 .img-hover{
-    transition: all 0.6s;
+    /*滑过图片变大*/
+    /*transition: all 0.6s;*/
 }
 .img-hover:hover{
-    transform: scale(1.5);
+    /*滑过图片变大*/
+    /*transform: scale(1.5);*/
+
+    /*滑过图片变亮*/
+    opacity:0.6;
+    -moz-opacity:0.6;
+    filter:alpha(opacity=60);
 }
 
 .box-active{
@@ -207,5 +215,12 @@ body{
 .border-transparent{
     opacity:0.8 !important;
 }
+/*.me-footer{*/
+/*    */
+/*}*/
+.me-main{
+    min-height: calc(60%);/*260x为footer的高度+margin*/
+}
+
 
 

@@ -79,7 +79,7 @@ public class UserLoginController {
                 session.setAttribute("theUser",user);
                 session.setMaxInactiveInterval(-1);
             }else{
-                redirectAttributes.addFlashAttribute("message","密码错啦");
+                redirectAttributes.addFlashAttribute("message","密码错误");
                 return "redirect:/user/toLogin";
             }
 
@@ -117,20 +117,20 @@ public class UserLoginController {
     public String register(User user, @RequestParam("code") String code, RedirectAttributes redirectAttributes,
                            HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         //后端表单校验
-        if(!user.getEmail().matches("^\\w+@[0-9a-zA-Z]{2,4}\\.[a-zA-Z]{2,3}(\\.[a-zA-Z]{2,3})?$")){
-            redirectAttributes.addFlashAttribute("message","邮箱格式错误");
-            return "redirect:/user/toRegister";
-        }
-        if(!user.getNickname().matches("(^[a-zA-Z][a-zA-Z0-9_]{1,4}$)|(^[\\u2E80-\\u9FFF]{2,5})")){
-            redirectAttributes.addFlashAttribute("message","昵称必须是2-5位中文或以字母开头的2-5位英文和数字组合");
-            return "redirect:/user/toRegister";
-        }
         if(!user.getUsername().matches("^[a-zA-Z][a-zA-Z0-9_]{4,15}$")){
             redirectAttributes.addFlashAttribute("message","用户名必须以字母开头，长度在5~16之间，允许字母数字下划线");
             return "redirect:/user/toRegister";
         }
+        if(!user.getNickname().matches("(^[a-zA-Z]{2,5}$)|(^[\\u2E80-\\u9FFF]{2,5}$)")){
+            redirectAttributes.addFlashAttribute("message","昵称必须是2-5位中文或以字母开头的2-5位英文和数字组合");
+            return "redirect:/user/toRegister";
+        }
         if(!user.getPassword().matches("^[a-zA-Z]\\w{5,17}$")){
             redirectAttributes.addFlashAttribute("message","密码必须以字母开头，长度在6~18之间，只能包含字符、数字和下划线");
+            return "redirect:/user/toRegister";
+        }
+        if(!user.getEmail().matches("^\\w+@[0-9a-zA-Z]{2,4}\\.[a-zA-Z]{2,3}(\\.[a-zA-Z]{2,3})?$")){
+            redirectAttributes.addFlashAttribute("message","邮箱格式错误");
             return "redirect:/user/toRegister";
         }
 

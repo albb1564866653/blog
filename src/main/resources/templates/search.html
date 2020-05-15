@@ -8,7 +8,6 @@
 		<link rel="stylesheet" href="../static/css/me-css.css" />
 	</head>
 	<body>
-	<script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 
 	<!-- 导航-->
 		<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
@@ -35,7 +34,7 @@
 		</nav>
 	<br/>
 		<!-- 中间内容-->
-		<div class="m-container-small m-padded-tb-big animated fadeInDown" style="word-break: break-all">
+		<div class="m-container-small m-padded-tb-big animated fadeInDown me-main" style="word-break: break-all">
 			<div class="ui container">
 				
 				<!-- header-->
@@ -107,17 +106,7 @@
 			</div>
 				
 		</div>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
+
 		<!-- 底部-->
 		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
 			<div class="ui center aligned container">
@@ -167,18 +156,6 @@
 			$('.m-item').toggleClass('m-mobile-hide');
 		})
 
-		$("#query").click(function () {
-			var queryInput=$("#query").prev().val();
-			if(queryInput!=''){
-				document.forms['search'].submit();
-			}else{
-				alert("请输入博客标题！");
-			}
-
-		})
-		$('.ui.dropdown').dropdown({
-			on : 'hover'
-		});
 		
 	</script>
 	
