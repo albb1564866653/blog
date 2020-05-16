@@ -85,6 +85,24 @@
         <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>
         <script th:src="@{/js/mouse-events.js}"></script>
         <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+        <script>
+            $('.menu.toggle').click(function () {
+                $('.m-item').toggleClass('m-mobile-hide');
+            });
+
+            $('.ui.dropdown').dropdown({
+                on : 'hover'
+            });
+
+            //消息提示关闭初始化
+            $('.message .close')
+                .on('click', function () {
+                    $(this)
+                        .closest('.message')
+                        .transition('fade');
+                });
+
+        </script>
     </th:block>
 
 

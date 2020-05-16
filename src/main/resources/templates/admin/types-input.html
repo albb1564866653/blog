@@ -125,13 +125,6 @@
       window.location.href="/admin/types";
     })
 
-    $('.menu.toggle').click(function () {
-      $('.m-item').toggleClass('m-mobile-hide');
-    });
-
-    $('.ui.dropdown').dropdown({
-      on : 'hover'
-    });
 
     $('.ui.form').form({//表单验证
       fields : {
@@ -145,13 +138,6 @@
       }
     });
 
-    //消息提示关闭初始化
-    $('.message .close')
-      .on('click', function () {
-        $(this)
-          .closest('.message')
-          .transition('fade');
-      });
 
   </script>
 </body>

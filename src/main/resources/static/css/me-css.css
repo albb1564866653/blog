@@ -221,6 +221,20 @@ body{
 .me-main{
     min-height: calc(60%);/*260x为footer的高度+margin*/
 }
-
+.type-color{
+    background-color: #5A5CAD !important;
+}
+.type-color2{
+    border-top: solid !important;
+    border-top-color: #5A5CAD !important;
+}
+.type-color3{
+    color: white !important;
+    background-color: #5A5CAD !important;
+}
+.type-color4{
+    border-top: solid !important;
+    border-top-color: #5A5CAD !important;
+}
 
 

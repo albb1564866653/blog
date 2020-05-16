@@ -432,7 +432,7 @@ h5,h6{font-size:1em;}
 
         <!--标签-->
         <div class="m-padded-lr-responsive">
-          <div class="ui tag left label" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</div>
+          <div class="ui basic left pointing label type-color3 m-margin-tb-tiny" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法论</div>
         </div>
 
         <!--赞赏-->
@@ -711,10 +711,6 @@ h5,h6{font-size:1em;}
 
 
   <script th:inline="javascript">
-
-    $('.menu.toggle').click(function () {
-      $('.m-item').toggleClass('m-mobile-hide');
-    });
 
     $('#payButton').popup({
       popup : $('.payQR.popup'),

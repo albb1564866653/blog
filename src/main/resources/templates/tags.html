@@ -3,7 +3,7 @@
 	<head th:replace="_fragments :: head(~{::title})">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Blog标签</title>
+		<title>BLOG_标签</title>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css" />
 		<link rel="stylesheet" href="../static/css/me-css.css" />
 	</head>
@@ -40,7 +40,7 @@
 				<div class="ui top attached segment">
 					<div class="ui middle aligned two column grid">
 						<div class="column">
-							<h3 class="ui blue header">标签</h3>
+							<h3 class="ui blue header" style="color: #428BDD;font-family: 幼圆">标签</h3>
 						</div>
 						<div class="right aligned column">
 							共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${#arrays.length(tags)}">10</h2> 个
@@ -50,7 +50,7 @@
 				
 				<div class="ui attached segment m-padded-tb-large">
 					
-					<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui tag large label m-margin-tb-tiny" th:classappend="${tag.id==activeTagId} ? 'blue'" th:each="tag : ${tags}">
+					<a href="#" th:href="@{/tags/{id}(id=${tag.id})}" class="ui large basic left pointing label m-margin-tb-tiny" th:classappend="${tag.id==activeTagId} ? 'type-color3'" th:each="tag : ${tags}">
 						<span th:text="${tag.name}">方法论</span> <div class="detail" th:text="${#arrays.length(tag.blogs)}">20</div>
 					</a>
 					
@@ -158,14 +158,6 @@
 		<script src="../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
 		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 		</th:block>
-	
-	<script>
-		
-		$('.menu.toggle').click(function(){
-			$('.m-item').toggleClass('m-mobile-hide');
-		})
-
-	</script>
 	
 	</body>
 </html>
