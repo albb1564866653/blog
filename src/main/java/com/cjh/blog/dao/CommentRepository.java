@@ -16,4 +16,6 @@ public interface CommentRepository {
     Comment selectCommentByParentCommentId(Long id);
 
     int updateAdminComment(Comment comment);
+
+    Long selectCommentCount(Long blogId);
 }

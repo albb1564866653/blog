@@ -13,4 +13,6 @@ public interface CommentService {
     int deleteCommentByBlogId(Long blogId);
 
     int updateAdminComment(Comment comment);
+
+    Long selectCommentCount(Long blogId);
 }

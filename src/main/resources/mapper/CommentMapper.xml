@@ -52,5 +52,8 @@
 		update t_comment set nickname=#{nickname},email=#{email} where admin_comment=1
 	</update>
 
+	<select id="selectCommentCount" parameterType="Long" resultType="Long">
+        select count(*) from t_comment where blog_id=#{blog_id};
+    </select>
 
 </mapper>

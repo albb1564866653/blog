@@ -36,7 +36,6 @@ public class TagServiceImpl implements TagService {
         return tagRepository.saveTag(tag);
     }
 
-    @Transactional
     @Override
     public Tag getTag(Long id) {
         return tagRepository.getTag(id);

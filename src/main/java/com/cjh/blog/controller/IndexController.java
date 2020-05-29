@@ -5,10 +5,7 @@ import com.cjh.blog.entity.Type;
 import com.cjh.blog.entity2.BlogQuery;
 import com.cjh.blog.entity2.DetailedBlog;
 import com.cjh.blog.entity2.IndexBlog;
-import com.cjh.blog.service.BlogService;
-import com.cjh.blog.service.TagService;
-import com.cjh.blog.service.TypeService;
-import com.cjh.blog.service.UserService;
+import com.cjh.blog.service.*;
 import com.cjh.blog.util.GetOtherData;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -35,9 +32,12 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommentService commentService;
+
     @RequestMapping("/")
     public String index(Model model, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum){
-        PageHelper.startPage(pageNum, 5);
+        PageHelper.startPage(pageNum, 8);
         List<IndexBlog> indexBlogs = blogService.selectIndexBlogs();
         //博客信息
         PageInfo<IndexBlog> blogPage = new PageInfo<>(indexBlogs);
@@ -99,7 +99,7 @@ public class IndexController {
     @RequestMapping("/search")
     public String search(@RequestParam(value = "query") String query,Model model, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum){
         System.out.println("query的值："+query);
-        PageHelper.startPage(pageNum, 2);
+        PageHelper.startPage(pageNum, 5);
         List<IndexBlog> searchBlogs = blogService.searchBlogs("%" + query + "%");
         PageInfo<IndexBlog> blogPage = new PageInfo<>(searchBlogs);
         model.addAttribute("blogPage", blogPage);
@@ -115,6 +115,9 @@ public class IndexController {
         System.out.println("结果："+detailedBlogs);
 
         model.addAttribute("blog", detailedBlogs);
+
+        Long commentCount=commentService.selectCommentCount(id);
+        model.addAttribute("commentCount", commentCount);
 
         GetOtherData.getNewBlogEstAndAvatar(blogService,userService,model);
         return "blog";

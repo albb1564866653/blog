@@ -1,10 +1,15 @@
 
 body{
-	background: url(../img/bg.png);
+	/*background: url(../img/bg.jpg);*/
     /*height: 100%;*/
     /*width: 100%;*/
     /*position: center;*/
     /*background-size: cover;//全屏展示*/
+
+    /*滑动时背景不动*/
+    background-image:url(../img/bg.jpg);
+    background-position:center;
+    background-attachment:fixed;
 }
 .m-padded-mini {
     padding: 0.2em !important;
@@ -19,6 +24,7 @@ body{
 .m-padded-tb-mini {
     padding-top: 0.2em !important;
     padding-bottom: 0.2em !important;
+
 }
 .m-padded-tb-tiny {
     padding-top: 0.3em !important;
@@ -106,7 +112,7 @@ body{
 .m-right-top {
     position: absolute;
     top:0;
-    right: 0;
+    right: 15px;
 }
 
 /*------display------*/
@@ -118,11 +124,11 @@ body{
 /*-----container*/
 
 .m-container {
-    max-width: 72em !important;
+    max-width: 80em !important;
     margin: auto !important;
 }
 .m-container-small {
-    max-width: 60em !important;
+    max-width: 74em !important;
     margin: auto !important;
 }
 
@@ -157,7 +163,7 @@ body{
 }
 .m-blue {
     font-family: "微软雅黑";
-    font-size: 12px;
+    font-size: 14px;
     color: #6A6A6A !important;
 }
 
@@ -215,9 +221,7 @@ body{
 .border-transparent{
     opacity:0.8 !important;
 }
-/*.me-footer{*/
-/*    */
-/*}*/
+
 .me-main{
     min-height: calc(60%);/*260x为footer的高度+margin*/
 }
@@ -236,5 +240,3 @@ body{
     border-top: solid !important;
     border-top-color: #5A5CAD !important;
 }
-
-

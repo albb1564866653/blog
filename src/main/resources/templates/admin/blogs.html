@@ -47,10 +47,12 @@
   <div  class="m-container-small m-padded-tb-big me-main">
     <div class="ui container">
 
-      <div class="ui message" th:classappend="${#strings.contains(message,'失败')} ? 'negative' : 'success'" th:unless="${#strings.isEmpty(message)}">
-        <i class="close icon"></i>
-        <div class="header">提示：</div>
-        <p th:text="${message}">操作成功！</p>
+      <div style="display: none">
+        <div class="ui message" id="tc" th:classappend="${#strings.contains(message,'失败')} ? 'negative' : 'success'" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p id="chbtn" th:text="${message}">操作成功！</p>
+        </div>
       </div>
 
       <span th:if="${searchBlog}==null">
@@ -85,7 +87,7 @@
           </form>
         </span>
 
-      <table class="ui compact blue table">
+      <table class="ui celled striped table">
         <thead>
           <tr>
             <th>#</th>
@@ -98,12 +100,12 @@
         </thead>
         <tbody>
           <tr th:each="blog : ${page.list}">
-            <td th:text="${blog.id}">1</td>
+            <td th:text="${blog.id}" class="left aligned collapsing">1</td>
             <td th:text="${blog.title}">刻意练习清单</td>
             <td th:text="${blog.type.name}">认知升级</td>
             <td th:text="${blog.recommend==1 ? '是' : '否'}">是</td>
             <td th:text="${#dates.format(blog.updateTime,'yyyy/MM/dd HH:mm:ss')}">2017-10-02 09:45</td>
-            <td>
+            <td class="right aligned collapsing">
               <a href="#" class="ui  blue basic button" th:href="@{/admin/blogs/update/{id}/(id=${blog.id})}"><i class="edit icon"></i>编辑</a>
               <a href="#" class="ui  red basic button" onclick="return confirm('确定要删除吗？')" th:href="@{/admin/blogs/delete/{id}/(id=${blog.id})}"><i class="trash icon"></i>删除</a>
             </td>
@@ -156,7 +158,7 @@
 
     </div>
   </div>
-
+  <br/><br/><br/>
   <!--底部footer-->
   <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -201,6 +203,23 @@
 
   <script>
 
+    if($('#tc').attr('class')=='ui message success'){
+      if($('#chbtn').text()=='新增成功！'){
+        swal("发布成功",null,"success")
+      }else if($('#chbtn').text()=='修改成功！'){
+        swal("修改成功",null,"success")
+      }else if($('#chbtn').text()=='删除成功！'){
+        swal("已删除",null,"success")
+      }
+    }else if($('#tc').attr('class')=='ui message negative'){
+      if($('#chbtn').text()=='新增失败！'){
+        swal("发布失败",'系统异常',"error")
+      }else if($('#chbtn').text()=='修改失败！'){
+        swal("修改失败",'系统异常',"error")
+      }else if($('#chbtn').text()=='删除失败！'){
+        swal("删除失败",'系统异常',"error")
+      }
+    }
 
     $('.ui.form').form({//表单验证
       fields : {

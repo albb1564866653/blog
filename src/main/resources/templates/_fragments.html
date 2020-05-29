@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
     <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
     <link rel="stylesheet" href="../static/css/me-css.css" th:href="@{/css/me-css.css}">
-    <link rel="shortcut icon" th:href="@{/img/cat.jpg}"/>
+<!--    <link rel="shortcut icon" th:href="@{/img/honeybee.jpg}"/>-->
+    <link rel="stylesheet" type="text/css" href="https://www.huangwx.cn/css/sweetalert.css">
+
 </head>
 <body>
     <!-- 导航inverted-->
@@ -23,7 +25,14 @@
 <!--                    &nbsp;&nbsp;&nbsp;<strong style="color: rebeccapurple">CJH_BLOG</strong>-->
 <!--                </a>-->
 
-                <a th:href="@{/}"><h2 class="ui header item" style="color: #9B859D">CJH_BLOG</h2></a>
+<!--                <a th:href="@{/}"><h2 class="ui header item" style="color: #9B859D;font-family: 'Agency FB'">CJH_BLOG</h2></a>-->
+
+                <!-- logo-->
+                <a href="#" th:href="@{/}" >
+                    <img th:src="@{/img/logo.jpg}" style="width: 100px;height: 60px">
+
+                </a>
+
                 <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>首页</a>
                 <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="book icon"></i>分类</a>
                 <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
@@ -44,9 +53,8 @@
                         </form>
                 </div>
 
-
                     <a href="#" th:if="${session.theUser}==null" th:href="@{/user/toLogin}" class="m-item item m-mobile-hide" ><i class="sign in icon"></i>登录</a>
-                    <a href="#"  th:if="${session.theUser}==null" th:href="@{/user/toRegister}" class="left m-item item m-mobile-hide" ><i class="pointing right icon"></i>注册</a>
+                    <a href="#"  th:if="${session.theUser}==null" th:href="@{/user/toRegister}" class="left m-item item m-mobile-hide" ><i class="gift icon"></i>注册</a>
 
                 <div class="left m-item m-mobile-hide menu" th:if="${session.theUser}!=null">
                     <div class="ui dropdown item">
@@ -54,22 +62,17 @@
                         <span th:text="${session.theUser.nickname}">陈嘉煌</span>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a href="#" th:href="@{/user/logout}" class="item"><i class="sign out icon"></i>注销</a>
-
+                            <a href="#" th:href="@{/user/logout}" class="item"><i class="sign out icon"></i>退出登录</a>
                         </div>
-
                     </div>
                 </div>
-
-
-
 
             </div>
         </div>
 
-        <a href="#" class="ui menu toggle icon button m-right-top m-mobile-show">
-            <i class="sidebar icon"></i>
-        </a>
+        <span  class="ui menu toggle icon button m-right-top m-mobile-show">
+            <i class="block layout icon"></i>
+        </span>
     </nav>
 
     <!-- 底部-->
@@ -79,7 +82,7 @@
                 <div class="three wide column">
                     <div class="ui inverted link list">
                         <div class="item">
-                            <img src="../static/img/wechat.JPG" th:src="@{/img/wechat.jpg}" class="ui rounded image" alt="" style="width: 110px;">
+                            <img src="../static/img/wechat.JPG" th:src="@{/img/footerPic.jpg}" class="ui rounded image" alt="" style="width: 110px;">
                         </div>
                     </div>
                 </div>
@@ -121,8 +124,9 @@
         <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
         <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
         <script th:src="@{/js/mouse-events.js}"></script>
-        <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-
+<!--        <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>-->
+        <script type="text/javascript" color="47,135,193" opacity='0.5' zIndex="-2" count="200" src="http://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+        <script type="text/javascript" src="https://www.huangwx.cn/js/sweetalert-dev.js"></script>
         <script>
             $('.menu.toggle').click(function () {
                 $('.m-item').toggleClass('m-mobile-hide');
@@ -133,7 +137,7 @@
                 if(queryInput!=''){
                     document.forms['search'].submit();
                 }else{
-                    alert("请输入博客标题！");
+                    swal("请输入博客标题",null,"error")
                 }
 
             })
@@ -142,7 +146,7 @@
 
                 if(event.keyCode==13){
                     if($('#zxc').val()==""){
-                        alert("请输入博客标题！");
+                        swal("请输入博客标题",null,"error")
                         return false;
                     }else{
                         $("#query").click();

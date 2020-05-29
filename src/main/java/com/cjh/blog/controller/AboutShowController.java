@@ -1,6 +1,6 @@
 package com.cjh.blog.controller;
 
-import com.cjh.blog.entity2.BlogQuery;
+
 import com.cjh.blog.service.BlogService;
 import com.cjh.blog.service.UserService;
 import com.cjh.blog.util.GetOtherData;

@@ -144,11 +144,10 @@ public class BlogController {
         int count=blogService.saveBlog(blog);
 
         System.out.println("获取前端的信息："+blog);
-
         if(count>0){
-            redirectAttributes.addFlashAttribute("message", "新增成功");
+            redirectAttributes.addFlashAttribute("message", "新增成功！");
         }else{
-            redirectAttributes.addFlashAttribute("message", "新增失败");
+            redirectAttributes.addFlashAttribute("message", "新增失败！");
         }
         return "redirect:/admin/blogs";
     }

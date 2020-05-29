@@ -47,7 +47,7 @@ public class CommentController {
         User user=(User)session.getAttribute("user");
 
         if(user!=null){//管理员已登录
-            if(comment.getNickname().equals(user.getNickname())){
+            if(theUser.getUsername().equals(user.getUsername())){
                 //设置管理员信息
                 comment.setAvatar(user.getAvatar());
                 comment.setAdminComment(true);

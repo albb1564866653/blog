@@ -32,6 +32,8 @@
 			</a>
 		</nav>
 	<br/>
+
+
 		<!-- 中间内容-->
 		<div class="m-container m-padded-tb-big me-main" style="word-break: break-all">
 
@@ -46,23 +48,21 @@
 					</div>
 					<div class="five wide column animated bounceInRight">
 						<div class="ui top attached segment">
-							<div class="ui blue header" style="color: #428BDD;font-family: 幼圆">关于我</div>
+							<div class="ui blue header" style="color: #5A5CAD">关于我</div>
 						</div>
 						<div class="ui attached segment">
 							<p class="m-text">Hello,friend</p>
 						</div>
 						<div class="ui attached segment">
-							<div class="ui orange basic left pointing label">编程</div>
-							<div class="ui orange basic left pointing label">思考</div>
-							<div class="ui orange basic left pointing label">运动</div>
-
+							<div class="ui violet basic label m-padded-tiny m-text-thin">编程</div>
+							<div class="ui violet basic label m-padded-tiny m-text-thin">思考</div>
+							<div class="ui violet basic label m-padded-tiny m-text-thin">运动</div>
 						</div>
 						<div class="ui attached segment">
-							<div class="ui blue basic left pointing label m-margin-tb-tiny">Java</div>
-							<div class="ui blue basic left pointing label m-margin-tb-tiny">Jquery</div>
-							<div class="ui blue basic left pointing label m-margin-tb-tiny">MySql</div>
-							<div class="ui blue basic left pointing label m-margin-tb-tiny">...</div>
-
+							<div class="ui basic left pointing label type-color3 m-margin-tb-tiny">Java</div>
+							<div class="ui basic left pointing label type-color3 m-margin-tb-tiny">Jquery</div>
+							<div class="ui basic left pointing label type-color3 m-margin-tb-tiny">MySql</div>
+							<div class="ui basic left pointing label type-color3 m-margin-tb-tiny">...</div>
 						</div>
 						<div class="ui bottom attached segment">
 							<a href="https://github.com/albb1564866653/blog" target="_blank" title="https://github.com/albb1564866653/blog" class="ui circular icon button"><i class="github icon"></i></a>
@@ -83,7 +83,8 @@
 
 		</div>
 
-	
+
+		<br/><br/><br/>
 		<!-- 底部-->
 		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
 			<div class="ui center aligned container">
@@ -137,7 +138,10 @@
 			position: 'top center'
 		})
 
-		
+
+		window.onload=function () {
+			document.getElementById("loading").style.display = "none";
+		}
 	</script>
 	
 	</body>

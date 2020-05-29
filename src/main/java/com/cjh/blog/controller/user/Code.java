@@ -25,7 +25,7 @@ public class Code {
 	
 	//验证码
 	@RequestMapping("/validcode")
-	public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void service(HttpServletRequest req, HttpServletResponse resp,HttpSession session) throws ServletException, IOException {
 		//创建一张图片
 		//单位:像素
 		BufferedImage image = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
@@ -63,7 +63,6 @@ public class Code {
 		ImageIO.write(image, "jpg", outputStream);
 		
 		//把验证码放入到session中
-		HttpSession session = req.getSession();
 		session.setAttribute("codeInt", ""+randList.get(0)+randList.get(1)+randList.get(2)+randList.get(3));
 	}
 }

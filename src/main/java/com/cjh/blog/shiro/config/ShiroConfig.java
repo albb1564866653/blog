@@ -46,10 +46,6 @@ public class ShiroConfig {
 		Map<String, String> filterChainDefinitionMap=new LinkedHashMap<>();
 		/*******************设置放行请求*******************/
 		filterChainDefinitionMap.put("/", "anon");
-//		filterChainDefinitionMap.put("/css/**", "anon");
-//		filterChainDefinitionMap.put("/img/**", "anon");
-//		filterChainDefinitionMap.put("/js/**", "anon");
-//		filterChainDefinitionMap.put("/lib/**", "anon");
 		filterChainDefinitionMap.put("/admin", "anon");
 		filterChainDefinitionMap.put("/admin/login", "anon");
 		/*******************设置身份验证请求*******************/

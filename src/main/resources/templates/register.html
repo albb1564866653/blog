@@ -8,185 +8,186 @@
   <link rel="stylesheet" href="../../static/css/me-css.css" th:href="@{/css/me-css.css}">
 </head>
 <body>
-  <br/><br/>
-  <div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
+<br/><br/>
+<div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
     <div class="ur container">
         <div class="ui middle aligned center aligned grid">
-          <div class="column">
-            <h2 class="ui blue image header">
-              <div class="content">
-               欢迎注册
-              </div>
-            </h2>
-            <form class="ui large form" method="post" action="#" th:action="@{/user/register}">
-              <div class="ui segment">
+            <div class="column">
+                <h2 class="ui blue image header">
+                    <div class="content">
+                        欢迎注册
+                    </div>
+                </h2>
+                <form class="ui large form" method="post" action="#" th:action="@{/user/register}">
+                    <div class="ui segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="username" placeholder="用户名">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="smile icon"></i>
+                                <input type="text" name="nickname" placeholder="昵称">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="密码">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password2" placeholder="确认密码">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" placeholder="邮箱">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left image input">
+                                <a href="#" title="换一张"><img th:src="@{/user/validcode}" id="codeimage" mytarget="netxtcode" height="40" width="100"/></a>&nbsp;
+                                <input type="text" id="code" name="code" placeholder="验证码"/>
+                            </div>
+                        </div>
+
+                        <button class="ui fluid large blue submit button"><i class="send outline icon"></i>注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+
+                    </div>
+
+                    <div class="ui error mini message"></div><!-- 表单验证的错误消息-->
+
+                    <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用户名或密码错误！</div><br/><!-- 后端验证的错误消息-->
+                </form>
+
                 <div class="field">
-                  <div class="ui left icon input">
-                    <i class="user icon"></i>
-                    <input type="text" name="username" placeholder="用户名">
-                  </div>
+                    <div class="ui left input">
+
+                        <a href="#" th:href="@{/}">返回首页</a>
+                    </div>
+
                 </div>
-                  <div class="field">
-                      <div class="ui left icon input">
-                          <i class="smile icon"></i>
-                          <input type="text" name="nickname" placeholder="昵称">
-                      </div>
-                  </div>
-                <div class="field">
-                  <div class="ui left icon input">
-                    <i class="lock icon"></i>
-                    <input type="password" name="password" placeholder="密码">
-                  </div>
-                </div>
-                  <div class="field">
-                      <div class="ui left icon input">
-                          <i class="lock icon"></i>
-                          <input type="password" name="password2" placeholder="确认密码">
-                      </div>
-                  </div>
-                  <div class="field">
-                      <div class="ui left icon input">
-                          <i class="mail icon"></i>
-                          <input type="text" name="email" placeholder="邮箱">
-                      </div>
-                  </div>
-                  <div class="field">
-                      <div class="ui left image input">
-                          <a href="#" title="换一张"><img th:src="@{/user/validcode}" id="codeimage" mytarget="netxtcode" height="40" width="100"/></a>&nbsp;
-                          <input type="text" id="code" name="code" placeholder="验证码"/>
-                      </div>
-                  </div>
 
-                <button class="ui fluid large blue submit button"><i class="send outline icon"></i>注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
-
-              </div>
-
-              <div class="ui error mini message"></div><!-- 表单验证的错误消息-->
-
-                <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用户名或密码错误！</div><br/><!-- 后端验证的错误消息-->
-            </form>
-
-              <div class="field">
-                  <div class="ui left input">
-
-                      <a href="#" th:href="@{/}">返回首页</a>
-                  </div>
-
-              </div>
-
-          </div>
+            </div>
         </div>
+
     </div>
-  </div>
+</div>
 
 
-  <th:block th:replace="admin/_fragments :: script"> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
-  <script src="../../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
-  <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
-  </th:block>
+<th:block th:replace="admin/_fragments :: script"> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
+    <script src="../../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+</th:block>
 
 
-    <script>
-        var codeInt=null;
-        $(function () {
-            $("[mytarget='netxtcode']").click(function(){
-                //浏览器带有缓存功能,不会多次请求相同数据
-                $("#codeimage").attr("src","validcode?date="+new Date());
-                return false;
-
-            })
-
+<script>
+    var codeInt=null;
+    $(function () {
+        $("[mytarget='netxtcode']").click(function(){
+            //浏览器带有缓存功能,不会多次请求相同数据
+            $("#codeimage").attr("src","validcode?date="+new Date());
+            return false;
 
         })
 
-        $('.ui.form').form({//表单验证
-            inline : true,
-            on     : 'blur',
+
+    })
+
+    $('.ui.form').form({//表单验证
+        inline : true,
+        on     : 'blur',
 
 
-            fields : {
-                username : {
-                    identifier: 'username',
-                    rules: [
-                        {
-                            type : 'empty',
-                            prompt: '请输入用户名'
-                        },
-                        {
-                            type: 'regExp',
-                            value: '^[a-zA-Z][a-zA-Z0-9_]{4,15}$',
-                            prompt: '用户名必须以字母开头，长度在5~16之间，只能包含字母和数字'
-                        }
-                    ]
-                },
-                nickname : {
-                    identifier: 'nickname',
-                    rules: [
-                        {
-                            type : 'empty',
-                            prompt: '请输入昵称'
-                        },
-                        {
-                            type : 'regExp',
-                            value: '(^[a-zA-Z]{2,5}$)|(^[\\u2E80-\\u9FFF]{2,5}$)',
-                            prompt: '昵称必须是2-5位中文或2-5位英文'
-                        }
-                    ]
-                },
-                password : {
-                    identifier: 'password',
-                    rules: [
-                        {
-                            type : 'empty',
-                            prompt: '请输入密码'
-                        },
-                        {
-                            type : 'regExp',
-                            value: '^[a-zA-Z]\\w{5,17}$',
-                            prompt: '密码必须以字母开头，长度在6~18之间，只能包含字符、数字和下划线'
-                        }
-                    ]
-                },
-                password2 : {
-                    identifier: 'password2',
-                    rules: [
-                        {
-                            type : 'empty',
-                            prompt: '请再次输入密码'
-                        },
-                        {
-                            type: 'match[password]',
-                            prompt: '两次密码不一致'
-                        }
-                    ]
-                },
-                email : {
-                    identifier: 'email',
-                    rules: [
-                        {
-                            type : 'empty',
-                            prompt: '请输入邮箱地址'
-                        },
-                        {
-                            type : 'regExp',
-                            value: '\\w+@[0-9a-zA-Z]{2,4}\\.[a-zA-Z]{2,3}(\\.[a-zA-Z]{2,3})?$',
-                            prompt: '邮箱格式错误'
-                        }
-                    ]
-                },
-                code : {
-                    identifier: 'code',
-                    rules: [
-                        {
-                            type : 'empty',
-                            prompt: '请输入验证码'
-                        }
-                    ]
-                }
+        fields : {
+            username : {
+                identifier: 'username',
+                rules: [
+                    {
+                        type : 'empty',
+                        prompt: '请输入用户名'
+                    },
+                    {
+                        type: 'regExp',
+                        value: '^[a-zA-Z][a-zA-Z0-9_]{4,15}$',
+                        prompt: '用户名必须以字母开头，长度在5~16之间，只能包含字母和数字'
+                    }
+                ]
+            },
+            nickname : {
+                identifier: 'nickname',
+                rules: [
+                    {
+                        type : 'empty',
+                        prompt: '请输入昵称'
+                    },
+                    {
+                        type : 'regExp',
+                        value: '(^[a-zA-Z]{2,5}$)|(^[\\u2E80-\\u9FFF]{2,5}$)',
+                        prompt: '昵称必须是2-5位中文或2-5位英文'
+                    }
+                ]
+            },
+            password : {
+                identifier: 'password',
+                rules: [
+                    {
+                        type : 'empty',
+                        prompt: '请输入密码'
+                    },
+                    {
+                        type : 'regExp',
+                        value: '^[a-zA-Z]\\w{5,17}$',
+                        prompt: '密码必须以字母开头，长度在6~18之间，只能包含字符、数字和下划线'
+                    }
+                ]
+            },
+            password2 : {
+                identifier: 'password2',
+                rules: [
+                    {
+                        type : 'empty',
+                        prompt: '请再次输入密码'
+                    },
+                    {
+                        type: 'match[password]',
+                        prompt: '两次密码不一致'
+                    }
+                ]
+            },
+            email : {
+                identifier: 'email',
+                rules: [
+                    {
+                        type : 'empty',
+                        prompt: '请输入邮箱地址'
+                    },
+                    {
+                        type : 'regExp',
+                        value: '\\w+@[0-9a-zA-Z]{2,4}\\.[a-zA-Z]{2,3}(\\.[a-zA-Z]{2,3})?$',
+                        prompt: '邮箱格式错误'
+                    }
+                ]
+            },
+            code : {
+                identifier: 'code',
+                rules: [
+                    {
+                        type : 'empty',
+                        prompt: '请输入验证码'
+                    }
+                ]
             }
-        });
+        }
+    });
 
-    </script>
+</script>
 
 </body>
 </html>

@@ -65,7 +65,7 @@
 												<div class="content"><a href="#" class="header" th:text="${blog.nickname}">xxx</a></div>
 											</div>
 											<div class="item">
-												<i class="clock icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-03-06</span>
+												<i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-03-06</span>
 											</div>
 											<div class="item">
 												<i class="eye icon"></i> <span th:text="${blog.views}">999</span>
@@ -106,7 +106,7 @@
 			</div>
 				
 		</div>
-
+	<br/><br/><br/>
 		<!-- 底部-->
 		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
 			<div class="ui center aligned container">

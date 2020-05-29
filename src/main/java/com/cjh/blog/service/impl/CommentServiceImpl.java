@@ -47,14 +47,21 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.saveComment(comment);
     }
 
+    @Transactional
     @Override
     public int deleteCommentByBlogId(Long blogId) {
         return commentRepository.deleteCommentByBlogId(blogId);
     }
 
+    @Transactional
     @Override
     public int updateAdminComment(Comment comment) {
         return commentRepository.updateAdminComment(comment);
+    }
+
+    @Override
+    public Long selectCommentCount(Long blogId) {
+        return commentRepository.selectCommentCount(blogId);
     }
 
 //    /**

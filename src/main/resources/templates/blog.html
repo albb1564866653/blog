@@ -46,10 +46,15 @@
             <div class="content"><a href="#" class="header" th:text="${blog.nickname}">陈嘉煌</a></div>
           </div>
           <div class="item">
-            <i class="clock icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-03-06</span>
+            <i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}">2020-03-06</span>
           </div>
           <div class="item">
             <i class="eye icon"></i> <span th:text="${blog.views}">999</span>
+          </div>
+          <div class="item">
+            <a href="#comment-container">
+              <i class="comment icon"></i> <span th:text="${commentCount}">999</span>
+            </a>
           </div>
         </div>
       </div>
@@ -485,7 +490,7 @@ h5,h6{font-size:1em;}
               <h3 class="ui dividing header">评论</h3>
               <div class="comment" th:each="comment : ${comments}">
                 <a class="avatar">
-                  <img style="cursor: pointer;width: 35px;height: 35px;" th:title="${comment.nickname}" src="https://picsum.photos/seed/picsum/100/100" th:src="${comment.avatar}">
+                  <img style="cursor: pointer;width: 40px;height: 40px;" th:title="${comment.nickname}" src="https://picsum.photos/seed/picsum/100/100" th:src="${comment.avatar}">
                 </a>
                 <!--隐藏的昵称 -->
                 <input id="hiddenName" type="hidden" th:value="${comment.nickname}">
@@ -503,7 +508,7 @@ h5,h6{font-size:1em;}
                   </a>&nbsp;
 
                   <div class="metadata">
-                    <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm:ss')}">Today at 5:42PM</span>
+                    <i class="calendar icon"></i><span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm:ss')}">Today at 5:42PM</span>
                   </div>
                   <div class="text" th:text="${comment.content}">
                     How artistic!
@@ -604,7 +609,7 @@ h5,h6{font-size:1em;}
         </div>
 
         <div th:if="${session.theUser==null}">
-          <a href="#" th:href="@{/user/toLogin}">登录</a>后可发言！
+          注册登录后才能发表评论，请<a href="#" th:href="@{/user/toLogin}">登录</a>或<a href="#" th:href="@{/user/toRegister}">注册</a>
         </div>
 
         <div id="comment-form" class="ui form" th:if="${session.theUser}!=null">
@@ -658,7 +663,7 @@ h5,h6{font-size:1em;}
   <div id="qrcode" class="ui wechat-qr flowing popup transition hidden "style="width: 130px !important;">
     <!--<img src="./static/images/wechat.jpg" alt="" class="ui rounded image" style="width: 120px !important;">-->
   </div>
-
+  <br/><br/><br/>
   <!--底部footer-->
   <footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -711,7 +716,6 @@ h5,h6{font-size:1em;}
 
 
   <script th:inline="javascript">
-
     $('#payButton').popup({
       popup : $('.payQR.popup'),
       on : 'click',

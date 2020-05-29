@@ -47,12 +47,14 @@
   <div  class="m-container-small m-padded-tb-big me-main">
     <div class="ui container">
 
-      <div class="ui message" th:classappend="${#strings.contains(message,'失败')} ? 'negative' : 'success'" th:unless="${#strings.isEmpty(message)}">
-        <i class="close icon"></i>
-        <div class="header">提示：</div>
-        <p th:text="${message}">操作成功！</p>
+      <div style="display: none">
+        <div class="ui message" id="tc" th:classappend="${#strings.contains(message,'失败')} ? 'negative' : 'success'" th:unless="${#strings.isEmpty(message)}">
+          <i class="close icon"></i>
+          <div class="header">提示：</div>
+          <p id="chbtn" th:text="${message}">操作成功！</p>
+        </div>
       </div>
-      <table class="ui compact blue table">
+      <table class="ui celled striped table">
         <thead>
           <tr>
             <th>#</th>
@@ -62,9 +64,9 @@
         </thead>
         <tbody>
           <tr th:each="type : ${page.list}">
-            <td th:text="${type.id}">1</td>
+            <td th:text="${type.id}" class="left aligned collapsing">1</td>
             <td th:text="${type.name}">刻意练习清单</td>
-            <td>
+            <td class="right aligned collapsing">
               <a href="#" th:href="@{/admin/types/editInput/{id}/(id=${type.id})}" class="ui blue basic button"><i class="edit icon"></i>编辑</a>
               <a href="#" onclick="return confirm('确定要删除吗？')" th:href="@{/admin/types/delete/{id}/(id=${type.id})}" class="ui red basic button"><i class="trash icon"></i>删除</a>
             </td>
@@ -91,7 +93,7 @@
     </div>
   </div>
 
-
+  <br/><br/><br/>
   <!--底部footer-->
   <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -134,6 +136,27 @@
   <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
   </th:block>
 
+  <script>
+    if($('#tc').attr('class')=='ui message success'){
+      if($('#chbtn').text()=='新增成功！'){
+        swal("新增成功",null,"success")
+      }else if($('#chbtn').text()=='更新成功！'){
+        swal("修改成功",null,"success")
+      }else if($('#chbtn').text()=='删除成功！'){
+        swal("已删除",null,"success")
+      }
+    }else if($('#tc').attr('class')=='ui message negative'){
+      if($('#chbtn').text().indexOf("该分类已存在于你的博客中")){
+        swal("该分类已被使用",null,"error")
+      }else if($('#chbtn').text()=='新增失败！'){
+        swal("发布失败",'系统异常',"error")
+      }else if($('#chbtn').text()=='更新失败！'){
+        swal("修改失败",'系统异常',"error")
+      }else if($('#chbtn').text()=='删除失败！'){
+        swal("删除失败",'系统异常',"error")
+      }
+    }
 
+  </script>
 </body>
 </html>

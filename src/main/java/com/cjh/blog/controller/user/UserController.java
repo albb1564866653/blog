@@ -7,6 +7,12 @@ import com.cjh.blog.util.Base64Decode;
 import com.cjh.blog.util.Base64Encode;
 import com.cjh.blog.util.Md5SaltEncode;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,7 +30,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/user")
-public class UserLoginController {
+public class UserController {
 
     @Autowired
     private BlogService blogService;
@@ -70,18 +76,23 @@ public class UserLoginController {
         if(lastUrl.contains("/user/toLogin")){
             lastUrl="/";
         }
-        User isExit = userService.selectUser(username);
-        if(isExit!=null){//判断是否有这个用户名
-            //核对用户名和密码
-            User user = userService.checkUser(username, Md5SaltEncode.md5Hash(password,username,3));
-            if(user!=null){//成功
-                user.setPassword(null);
-                session.setAttribute("theUser",user);
-                session.setMaxInactiveInterval(-1);
-            }else{
-                redirectAttributes.addFlashAttribute("message","密码错误");
-                return "redirect:/user/toLogin";
-            }
+
+        //1.获取Subject
+        Subject subject = SecurityUtils.getSubject();
+        //2.创建令牌，封装用户数据
+        UsernamePasswordToken token=new UsernamePasswordToken(username, Md5SaltEncode.md5Hash(password,username,3));
+
+        try {
+
+            //3.登录
+            System.out.println("subject-----------"+subject);
+            subject.login(token);
+
+            //获取用户信息放进session
+            User user = userService.selectUser(username);
+            user.setPassword(null);
+            session.setAttribute("theUser",user);
+            session.setMaxInactiveInterval(-1);
 
             if(remember!=null){//记住密码
                 System.out.println(request.getContextPath());
@@ -96,18 +107,30 @@ public class UserLoginController {
                 response.addCookie(cookie);
             }
 
-
-        }else{
-            redirectAttributes.addFlashAttribute("message","用户名不存在");
+        }  catch (UnknownAccountException e) {
+            redirectAttributes.addFlashAttribute("message","用户名不存在哦🙂");
+            return "redirect:/user/toLogin";
+        } catch (IncorrectCredentialsException e) {
+            redirectAttributes.addFlashAttribute("message","密码错误哦😞");
+            return "redirect:/user/toLogin";
+        }	catch (AuthenticationException e) {
             return "redirect:/user/toLogin";
         }
-        return "redirect:"+lastUrl;
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        return "redirect:"+lastUrl;
 
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session,HttpServletRequest request){
+//        Subject subject = SecurityUtils.getSubject();
+//        //注销，会将session也清除
+//        subject.logout();
         session.removeAttribute("theUser");
         lastUrl=request.getHeader("Referer");
         return "redirect:"+lastUrl;
@@ -157,6 +180,7 @@ public class UserLoginController {
         }else{
             redirectAttributes.addFlashAttribute("message","验证码错误");
             return "redirect:/user/toRegister";
+//            return "register :: registerList";
         }
 
 
