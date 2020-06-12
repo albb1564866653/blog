@@ -69,7 +69,7 @@
             <artifactId>commons-codec</artifactId>
         </dependency>
 
-<!--        Markdown 转换 HTML-->
+        <!--        Markdown 转换 HTML-->
         <dependency>
             <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark</artifactId>
@@ -104,7 +104,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration><fork>true</fork></configuration>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
         </plugins>
     </build>

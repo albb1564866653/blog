@@ -36,7 +36,7 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public int updateType(Type type) {
         Type t = typeRepository.getType(type.getId());
-        if(t==null){
+        if (t == null) {
             throw new NotFoundException("不存在该分类！");
         }
         return typeRepository.updateType(type);

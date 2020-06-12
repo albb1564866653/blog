@@ -7,23 +7,23 @@
 <mapper namespace="com.cjh.blog.dao.UserRepository">
 
     <select id="checkUser" resultType="User">
-		select * from t_user where username=#{username} and password=#{password}
-	</select>
+        select * from t_user where username=#{username} and password=#{password}
+    </select>
 
-	<select id="selectUser" parameterType="String" resultType="User">
-		select * from t_user where username=#{username}
-	</select>
+    <select id="selectUser" parameterType="String" resultType="User">
+        select * from t_user where username=#{username}
+    </select>
 
-	<update id="updateUserInfo" parameterType="User">
-		update t_user set nickname=#{nickname},email=#{email} where id=#{id}
-	</update>
+    <update id="updateUserInfo" parameterType="User">
+        update t_user set nickname=#{nickname},email=#{email} where id=#{id}
+    </update>
 
-	<select id="getAvatar" resultType="String">
-		select avatar from t_user where type=1;
-	</select>
+    <select id="getAvatar" resultType="String">
+        select avatar from t_user where type=1;
+    </select>
 
-	<insert id="addUser" parameterType="User">
-		insert into t_user (nickname,username,password,email,avatar,type,create_time,update_time) values
-		(#{nickname},#{username},#{password},#{email},#{avatar},#{type},#{createTime},#{updateTime})
-	</insert>
+    <insert id="addUser" parameterType="User">
+        insert into t_user (nickname,username,password,email,avatar,type,create_time,update_time) values
+        (#{nickname},#{username},#{password},#{email},#{avatar},#{type},#{createTime},#{updateTime})
+    </insert>
 </mapper>

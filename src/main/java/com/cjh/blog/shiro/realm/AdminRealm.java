@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 public class AdminRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
+
     /**
      * 为当前登录用户授权
      */
@@ -25,6 +26,7 @@ public class AdminRealm extends AuthorizingRealm {
         System.out.println("执行授权");
         return null;
     }
+
     /**
      * 验证当前登录用户
      */
@@ -35,9 +37,9 @@ public class AdminRealm extends AuthorizingRealm {
         String userName = (String) token.getPrincipal();
         //2.调用根据service层的方法
         User user = userService.selectUser(userName);
-        if(user!=null) {
+        if (user != null) {
             //3.验证身份
-            AuthenticationInfo authenticationInfo=new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),"xxx");
+            AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), "xxx");
             return authenticationInfo;
         }
         //验证失败

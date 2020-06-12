@@ -38,20 +38,20 @@ public class UserController {
     private UserService userService;
 
     //存储上一个请求的url地址
-    private String lastUrl=null;
+    private String lastUrl = null;
 
     @GetMapping("/toLogin")
-    public String toLogin(HttpServletRequest request){
-        System.out.println("================================进入登录页"+request.getHeader("Referer"));
-        lastUrl=request.getHeader("Referer");
+    public String toLogin(HttpServletRequest request) {
+        System.out.println("================================进入登录页" + request.getHeader("Referer"));
+        lastUrl = request.getHeader("Referer");
 
         Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
-            for(Cookie temp:cookies){
+        if (cookies != null) {
+            for (Cookie temp : cookies) {
                 if (temp.getName().equals("rememberInfo")) {
                     String[] loginInfo = temp.getValue().split("-");
-                    request.setAttribute("userName",loginInfo[0]);
-                    request.setAttribute("password",new String(Base64Decode.base64Decode(loginInfo[1])));
+                    request.setAttribute("userName", loginInfo[0]);
+                    request.setAttribute("password", new String(Base64Decode.base64Decode(loginInfo[1])));
                 }
 
             }
@@ -61,9 +61,9 @@ public class UserController {
     }
 
     @GetMapping("/toRegister")
-    public String toRegister(HttpServletRequest request){
-        lastUrl=request.getHeader("Referer");
-        System.out.println("================================进入注册页"+request.getHeader("Referer"));
+    public String toRegister(HttpServletRequest request) {
+        lastUrl = request.getHeader("Referer");
+        System.out.println("================================进入注册页" + request.getHeader("Referer"));
         return "register";
 
     }
@@ -71,49 +71,49 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password,
                         String remember, HttpServletRequest request, HttpServletResponse response,
-                        RedirectAttributes redirectAttributes,HttpSession session){
-        System.out.println("================================执行登录"+lastUrl);
-        if(lastUrl.contains("/user/toLogin")){
-            lastUrl="/";
+                        RedirectAttributes redirectAttributes, HttpSession session) {
+        System.out.println("================================执行登录" + lastUrl);
+        if (lastUrl.contains("/user/toLogin")) {
+            lastUrl = "/";
         }
 
         //1.获取Subject
         Subject subject = SecurityUtils.getSubject();
         //2.创建令牌，封装用户数据
-        UsernamePasswordToken token=new UsernamePasswordToken(username, Md5SaltEncode.md5Hash(password,username,3));
+        UsernamePasswordToken token = new UsernamePasswordToken(username, Md5SaltEncode.md5Hash(password, username, 3));
 
         try {
 
             //3.登录
-            System.out.println("subject-----------"+subject);
+            System.out.println("subject-----------" + subject);
             subject.login(token);
 
             //获取用户信息放进session
             User user = userService.selectUser(username);
             user.setPassword(null);
-            session.setAttribute("theUser",user);
+            session.setAttribute("theUser", user);
             session.setMaxInactiveInterval(-1);
 
-            if(remember!=null){//记住密码
+            if (remember != null) {//记住密码
                 System.out.println(request.getContextPath());
                 //将密码进行 base64加密再放进cookie
-                Cookie cookie=new Cookie("rememberInfo",username+"-"+ Base64Encode.base64Encode(password.getBytes()));
-                cookie.setMaxAge(60*60*24*31);//一个月
+                Cookie cookie = new Cookie("rememberInfo", username + "-" + Base64Encode.base64Encode(password.getBytes()));
+                cookie.setMaxAge(60 * 60 * 24 * 31);//一个月
                 response.addCookie(cookie);
 
-            }else{
-                Cookie cookie=new Cookie("rememberInfo","");
+            } else {
+                Cookie cookie = new Cookie("rememberInfo", "");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
 
-        }  catch (UnknownAccountException e) {
-            redirectAttributes.addFlashAttribute("message","用户名不存在哦🙂");
+        } catch (UnknownAccountException e) {
+            redirectAttributes.addFlashAttribute("message", "用户名不存在哦🙂");
             return "redirect:/user/toLogin";
         } catch (IncorrectCredentialsException e) {
-            redirectAttributes.addFlashAttribute("message","密码错误哦😞");
+            redirectAttributes.addFlashAttribute("message", "密码错误哦😞");
             return "redirect:/user/toLogin";
-        }	catch (AuthenticationException e) {
+        } catch (AuthenticationException e) {
             return "redirect:/user/toLogin";
         }
         try {
@@ -122,63 +122,63 @@ public class UserController {
             e.printStackTrace();
         }
 
-        return "redirect:"+lastUrl;
+        return "redirect:" + lastUrl;
 
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session,HttpServletRequest request){
+    public String logout(HttpSession session, HttpServletRequest request) {
 //        Subject subject = SecurityUtils.getSubject();
 //        //注销，会将session也清除
 //        subject.logout();
         session.removeAttribute("theUser");
-        lastUrl=request.getHeader("Referer");
-        return "redirect:"+lastUrl;
+        lastUrl = request.getHeader("Referer");
+        return "redirect:" + lastUrl;
     }
 
     @PostMapping("/register")
     public String register(User user, @RequestParam("code") String code, RedirectAttributes redirectAttributes,
                            HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         //后端表单校验
-        if(!user.getUsername().matches("^[a-zA-Z][a-zA-Z0-9_]{4,15}$")){
-            redirectAttributes.addFlashAttribute("message","用户名必须以字母开头，长度在5~16之间，允许字母数字下划线");
+        if (!user.getUsername().matches("^[a-zA-Z][a-zA-Z0-9_]{4,15}$")) {
+            redirectAttributes.addFlashAttribute("message", "用户名必须以字母开头，长度在5~16之间，允许字母数字下划线");
             return "redirect:/user/toRegister";
         }
-        if(!user.getNickname().matches("(^[a-zA-Z]{2,5}$)|(^[\\u2E80-\\u9FFF]{2,5}$)")){
-            redirectAttributes.addFlashAttribute("message","昵称必须是2-5位中文或以字母开头的2-5位英文和数字组合");
+        if (!user.getNickname().matches("(^[a-zA-Z]{2,5}$)|(^[\\u2E80-\\u9FFF]{2,5}$)")) {
+            redirectAttributes.addFlashAttribute("message", "昵称必须是2-5位中文或以字母开头的2-5位英文和数字组合");
             return "redirect:/user/toRegister";
         }
-        if(!user.getPassword().matches("^[a-zA-Z]\\w{5,17}$")){
-            redirectAttributes.addFlashAttribute("message","密码必须以字母开头，长度在6~18之间，只能包含字符、数字和下划线");
+        if (!user.getPassword().matches("^[a-zA-Z]\\w{5,17}$")) {
+            redirectAttributes.addFlashAttribute("message", "密码必须以字母开头，长度在6~18之间，只能包含字符、数字和下划线");
             return "redirect:/user/toRegister";
         }
-        if(!user.getEmail().matches("^\\w+@[0-9a-zA-Z]{2,4}\\.[a-zA-Z]{2,3}(\\.[a-zA-Z]{2,3})?$")){
-            redirectAttributes.addFlashAttribute("message","邮箱格式错误");
+        if (!user.getEmail().matches("^\\w+@[0-9a-zA-Z]{2,4}\\.[a-zA-Z]{2,3}(\\.[a-zA-Z]{2,3})?$")) {
+            redirectAttributes.addFlashAttribute("message", "邮箱格式错误");
             return "redirect:/user/toRegister";
         }
 
 
         //密码加密
-        user.setPassword(Md5SaltEncode.md5Hash(user.getPassword(),user.getUsername(),3));
+        user.setPassword(Md5SaltEncode.md5Hash(user.getPassword(), user.getUsername(), 3));
         user.setType(0);
         user.setAvatar("/img/avatar.jpg");
 
         String sessionCode = (String) session.getAttribute("codeInt");//获取验证码的数字
         //判断用户输入的验证码是否等于服务器的验证码
-        if(Objects.equals(sessionCode,code)) {
+        if (Objects.equals(sessionCode, code)) {
             //根据用户名查找是否存在此用户名
             User isExits = userService.selectUser(user.getUsername());
-            if(isExits==null){//存在
+            if (isExits == null) {//存在
                 int count = userService.addUser(user);
-                request.setAttribute("lastUrl",lastUrl);
+                request.setAttribute("lastUrl", lastUrl);
                 return "jump";
-            }else{
-                redirectAttributes.addFlashAttribute("message","用户名已被注册");
+            } else {
+                redirectAttributes.addFlashAttribute("message", "用户名已被注册");
                 return "redirect:/user/toRegister";
             }
 
-        }else{
-            redirectAttributes.addFlashAttribute("message","验证码错误");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "验证码错误");
             return "redirect:/user/toRegister";
 //            return "register :: registerList";
         }

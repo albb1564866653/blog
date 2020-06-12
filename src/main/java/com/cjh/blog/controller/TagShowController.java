@@ -36,20 +36,20 @@ public class TagShowController {
     private UserService userService;
 
     @GetMapping("/tags/{id}")
-    public String types(@PathVariable Long id, Model model, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum){
+    public String types(@PathVariable Long id, Model model, @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
 
         List<Tag> tags = tagService.selectIndexTags2();
         //-1表示从首页导航点进来的
-        if(id==-1){
-            if(tags!=null){
-                if(tags.size()>0){
-                    id=tags.get(0).getId();
+        if (id == -1) {
+            if (tags != null) {
+                if (tags.size() > 0) {
+                    id = tags.get(0).getId();
                 }
 
             }
 
         }
-        model.addAttribute("tags",tags);
+        model.addAttribute("tags", tags);
 
         PageHelper.startPage(pageNum, 5);
         List<IndexBlog> blogs = blogService.selectBlogsByTagId(id);
@@ -57,7 +57,7 @@ public class TagShowController {
         model.addAttribute("page", page);
         model.addAttribute("activeTagId", id);
 
-        GetOtherData.getNewBlogEstAndAvatar(blogService,userService,model);
+        GetOtherData.getNewBlogEstAndAvatar(blogService, userService, model);
 
         return "tags";
     }

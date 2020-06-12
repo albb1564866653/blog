@@ -24,20 +24,20 @@ public class AdminController {
     private CommentService commentService;
 
     @GetMapping("/adminInfo")
-    public String adminInfo(HttpSession session, Model model){
-        User user=(User)session.getAttribute("user");
+    public String adminInfo(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
         User userInfo = userService.selectUser(user.getUsername());
-        model.addAttribute("userInfo",userInfo);
+        model.addAttribute("userInfo", userInfo);
         return "admin/adminInfo";
     }
 
     @PostMapping("/saveInfo")
-    public String saveInfo(User user,RedirectAttributes redirectAttributes,HttpSession session){
-        System.out.println("user对象："+user);
+    public String saveInfo(User user, RedirectAttributes redirectAttributes, HttpSession session) {
+        System.out.println("user对象：" + user);
 
         int count = userService.updateUserInfo(user);
         //更新评论模块中管理员的信息
-        int result=commentService.updateAdminComment(new Comment(user.getNickname(),user.getEmail()));
+        int result = commentService.updateAdminComment(new Comment(user.getNickname(), user.getEmail()));
 
         try {
             Thread.sleep(500);

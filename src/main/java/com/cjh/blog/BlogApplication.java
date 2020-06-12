@@ -1,6 +1,7 @@
 package com.cjh.blog;
 
 //import com.cjh.blog.interceptor.LoginInterceptor;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

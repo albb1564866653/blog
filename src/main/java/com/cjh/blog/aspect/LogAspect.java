@@ -18,37 +18,37 @@ import java.util.Arrays;
 @Component
 public class LogAspect {
 
-    private final Logger logger= LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Pointcut("execution(* com.cjh.blog.controller.*.*(..))")
-    public void log(){
+    public void log() {
     }
 
     @Before("log()")
-    public void doBefore(JoinPoint joinPoint){
-        ServletRequestAttributes attributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest  request=attributes.getRequest();
-        String url=request.getRequestURL().toString();//访问地址
-        String ip=request.getRemoteAddr();//ip地址
+    public void doBefore(JoinPoint joinPoint) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        String url = request.getRequestURL().toString();//访问地址
+        String ip = request.getRemoteAddr();//ip地址
         //请求的方法的具体路径
-        String classMethod=joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName();
-        Object[] args=joinPoint.getArgs();//请求的参数
-        RequestLog requestLog=new RequestLog(url,ip,classMethod,args);
+        String classMethod = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();//请求的参数
+        RequestLog requestLog = new RequestLog(url, ip, classMethod, args);
 
-        logger.info("Request : {}",requestLog);
+        logger.info("Request : {}", requestLog);
     }
 
     @After("log()")
-    public void doAfter(){
+    public void doAfter() {
 //        logger.info("-------doAfter-----");
     }
 
-    @AfterReturning(returning = "result",pointcut = "log()")
-    public void doAfterReturn(Object result){
-        logger.info("Result : {}",result);
+    @AfterReturning(returning = "result", pointcut = "log()")
+    public void doAfterReturn(Object result) {
+        logger.info("Result : {}", result);
     }
 
-    private class RequestLog{
+    private class RequestLog {
         private String url;
         private String ip;
         private String classMathod;

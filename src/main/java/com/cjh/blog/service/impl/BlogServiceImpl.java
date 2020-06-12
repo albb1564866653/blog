@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Service
 public class BlogServiceImpl implements BlogService {
-    private int i=-1;
+    private int i = -1;
 
     @Autowired
     private BlogRepository blogRepository;
@@ -88,13 +88,13 @@ public class BlogServiceImpl implements BlogService {
         //浏览次数+1
         blogRepository.changeViews(id);
 
-        DetailedBlog detailedBlog=blogRepository.selectDetailedBlog(id);
-        if(detailedBlog==null){
+        DetailedBlog detailedBlog = blogRepository.selectDetailedBlog(id);
+        if (detailedBlog == null) {
             throw new NotFoundException("该博客不存在");
         }
-        DetailedBlog db=new DetailedBlog();
-        BeanUtils.copyProperties(detailedBlog,db);
-        String content=db.getContent();
+        DetailedBlog db = new DetailedBlog();
+        BeanUtils.copyProperties(detailedBlog, db);
+        String content = db.getContent();
         db.setContent(MarkdownUtil.markdownToHtmlExtensions(content));
         return db;
     }
@@ -102,7 +102,7 @@ public class BlogServiceImpl implements BlogService {
     @Transactional
     @Override
     public int saveBlog(Blog blog) {
-        if(blog.getId()==null){//新建
+        if (blog.getId() == null) {//新建
             //给blog初始化属性
             blog.setCreateTime(new Date());
             blog.setUpdateTime(new Date());
@@ -110,17 +110,18 @@ public class BlogServiceImpl implements BlogService {
             //将标签的数据存到t_blogs_tag表中
             List<Tag> tags = blog.getTags();
             //随机数作为blog的id值
-            i=(int)(Math.random()*1000)+1;;
+            i = (int) (Math.random() * 1000) + 1;
+            ;
 
             Blog isExit = blogRepository.selectBlogById((long) i);
-            if(isExit!=null){//这个随机数存在于数据库，不能使用
-                i=(int)(Math.random()*1000)+1;
+            if (isExit != null) {//这个随机数存在于数据库，不能使用
+                i = (int) (Math.random() * 1000) + 1;
             }
-            blog.setId((long)i);
+            blog.setId((long) i);
 
             BlogAndTag blogAndTag = null;
             for (Tag tag : tags) {
-                blogAndTag = new BlogAndTag(tag.getId(),blog.getId());
+                blogAndTag = new BlogAndTag(tag.getId(), blog.getId());
                 blogRepository.saveBlogAndTag(blogAndTag);
             }
 
@@ -141,14 +142,14 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public int updateBlog(Blog blog) {
         blog.setUpdateTime(new Date());
-        System.out.println("genxin......."+blog);
+        System.out.println("genxin......." + blog);
         blogRepository.deleteBlogAndTag(blog.getId());
         //将标签的数据存到t_blogs_tag表中
         String tag_ids = blog.getTagIds();//1,2,3
         List<Long> tagIds = TagServiceImpl.convertToList(tag_ids);//[1,2,3]
         BlogAndTag blogAndTag = null;
         for (Long tagId : tagIds) {
-            blogAndTag = new BlogAndTag(tagId,blog.getId());
+            blogAndTag = new BlogAndTag(tagId, blog.getId());
             blogRepository.saveBlogAndTag(blogAndTag);
         }
 

@@ -39,14 +39,14 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping
-    public String loginPage(HttpServletRequest request){
+    public String loginPage(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        if(cookies!=null){
-            for(Cookie temp:cookies){
+        if (cookies != null) {
+            for (Cookie temp : cookies) {
                 if (temp.getName().equals("rememberInfo")) {
                     String[] loginInfo = temp.getValue().split("-");
-                    request.setAttribute("userName",loginInfo[0]);
-                    request.setAttribute("password",new String(Base64Decode.base64Decode(loginInfo[1])));
+                    request.setAttribute("userName", loginInfo[0]);
+                    request.setAttribute("password", new String(Base64Decode.base64Decode(loginInfo[1])));
                 }
 
             }
@@ -59,77 +59,77 @@ public class LoginController {
     public String login(@RequestParam String username, @RequestParam String password,
                         HttpSession session, String remember, HttpServletResponse response,
                         RedirectAttributes redirectAttributes, HttpServletRequest request,
-                        Model model){
+                        Model model) {
 
-        User isAdmin=userService.selectUser(username);
+        User isAdmin = userService.selectUser(username);
         //判断是否是管理员的账号去登录
-        if(isAdmin!=null){
-            if(isAdmin.getType()==1){//1=管理员身份
+        if (isAdmin != null) {
+            if (isAdmin.getType() == 1) {//1=管理员身份
 
-            //1.获取Subject
-            Subject subject = SecurityUtils.getSubject();
-            //2.创建令牌，封装用户数据
-            UsernamePasswordToken token=new UsernamePasswordToken(username, Md5SaltEncode.md5Hash(password,username,3));
-            try {
+                //1.获取Subject
+                Subject subject = SecurityUtils.getSubject();
+                //2.创建令牌，封装用户数据
+                UsernamePasswordToken token = new UsernamePasswordToken(username, Md5SaltEncode.md5Hash(password, username, 3));
+                try {
 
-                //3.登录
-                System.out.println("subject-----------"+subject);
-                subject.login(token);
+                    //3.登录
+                    System.out.println("subject-----------" + subject);
+                    subject.login(token);
 
-                if(remember!=null){//记住密码
-                    System.out.println(request.getContextPath());
-                    //将密码进行 base64加密再放进cookie
-                    Cookie cookie=new Cookie("rememberInfo",username+"-"+ Base64Encode.base64Encode(password.getBytes()));
-                    cookie.setMaxAge(60*60*24*31);//一个月
-                    response.addCookie(cookie);
+                    if (remember != null) {//记住密码
+                        System.out.println(request.getContextPath());
+                        //将密码进行 base64加密再放进cookie
+                        Cookie cookie = new Cookie("rememberInfo", username + "-" + Base64Encode.base64Encode(password.getBytes()));
+                        cookie.setMaxAge(60 * 60 * 24 * 31);//一个月
+                        response.addCookie(cookie);
 
-                }else{
-                    Cookie cookie=new Cookie("rememberInfo","");
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
+                    } else {
+                        Cookie cookie = new Cookie("rememberInfo", "");
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    }
+
+                    //最新博客信息
+                    List<BlogQuery> newBlogs = blogService.selectNewBlogs();
+                    model.addAttribute("newBlogs", newBlogs);
+                    //获取管理员信息，将信息存入session
+                    User user = userService.selectUser(username);
+                    user.setPassword(null);
+                    session.setAttribute("user", user);
+                    session.setMaxInactiveInterval(-1);
+
+                } catch (UnknownAccountException e) {
+                    redirectAttributes.addFlashAttribute("message", "用户名不存在哦🙂");
+                    return "redirect:/admin";
+                } catch (IncorrectCredentialsException e) {
+                    redirectAttributes.addFlashAttribute("message", "密码错误哦😞");
+                    return "redirect:/admin";
+                } catch (AuthenticationException e) {
+                    return "redirect:/admin";
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 
-                //最新博客信息
-                List<BlogQuery> newBlogs = blogService.selectNewBlogs();
-                model.addAttribute("newBlogs", newBlogs);
-                //获取管理员信息，将信息存入session
-                User user = userService.selectUser(username);
-                user.setPassword(null);
-                session.setAttribute("user",user);
-                session.setMaxInactiveInterval(-1);
+                return "admin/index";
 
-            }  catch (UnknownAccountException e) {
-                redirectAttributes.addFlashAttribute("message","用户名不存在哦🙂");
-                return "redirect:/admin";
-            } catch (IncorrectCredentialsException e) {
-                redirectAttributes.addFlashAttribute("message","密码错误哦😞");
-                return "redirect:/admin";
-            }	catch (AuthenticationException e) {
-                return "redirect:/admin";
-            }
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            return "admin/index";
-
-            }else{
+            } else {
                 //不是管理员，阻止登录
-            redirectAttributes.addFlashAttribute("message","你不是管理员哦😞");
-            return "redirect:/admin";
+                redirectAttributes.addFlashAttribute("message", "你不是管理员哦😞");
+                return "redirect:/admin";
             }
 
-        }else{
-            redirectAttributes.addFlashAttribute("message","用户名不存在哦😞");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "用户名不存在哦😞");
             return "redirect:/admin";
         }
 
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         System.out.println("==============执行注销============");
         Subject subject = SecurityUtils.getSubject();
         //注销，会将session也清除

@@ -31,18 +31,18 @@ public class TypeShowController {
     private UserService userService;
 
     @GetMapping("/types/{id}")
-    public String types(@PathVariable Long id, Model model, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum){
+    public String types(@PathVariable Long id, Model model, @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
 
         List<Type> types = typeService.selectIndexTypes2();
 
         //-1表示从首页导航点进来的
-        if(id==-1){
-            if(types.size()>0){
-                id=types.get(0).getId();
+        if (id == -1) {
+            if (types.size() > 0) {
+                id = types.get(0).getId();
             }
 
         }
-        model.addAttribute("types",types);
+        model.addAttribute("types", types);
 
         PageHelper.startPage(pageNum, 5);
         List<IndexBlog> blogs = blogService.selectBlogsByTypeId(id);
@@ -50,7 +50,7 @@ public class TypeShowController {
         model.addAttribute("page", page);
         model.addAttribute("activeTypeId", id);
 
-        GetOtherData.getNewBlogEstAndAvatar(blogService,userService,model);
+        GetOtherData.getNewBlogEstAndAvatar(blogService, userService, model);
 
         return "types";
     }

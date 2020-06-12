@@ -1,102 +1,106 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="admin/_fragments :: head(~{::title})">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLOG_用户登录</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-  <link rel="stylesheet" href="../../static/css/me-css.css" th:href="@{/css/me-css.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG_用户登录</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me-css.css" th:href="@{/css/me-css.css}">
 </head>
 <body>
-  <br/><br/>
-  <div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
+<br/><br/>
+<div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
 
     <div class="ur container">
         <div class="ui middle aligned center aligned grid">
-          <div class="column">
-            <h2 class="ui blue image header">
-              <div class="content">
-               用户登录
-              </div>
-            </h2>
-            <form class="ui large form" method="post" action="#" th:action="@{/user/login}">
-              <div class="ui segment">
-                <div class="field">
-                  <div class="ui left icon input">
-                    <i class="user icon"></i>
-                    <input type="text" name="username" placeholder="用户名" th:value="${userName}">
-                  </div>
-                </div>
-                <div class="field">
-                  <div class="ui left icon input">
-                    <i class="lock icon"></i>
-                    <input type="password" name="password" placeholder="密码" th:value="${password}">
-                  </div>
-                </div>
-                <div class="field" align="left">
-                    <div class="ui toggle checkbox">
-                      <input type="checkbox" name="remember" th:checked="${password}!=null ? true : false">
-                      <label>记住我</label>
+            <div class="column">
+                <h2 class="ui blue image header">
+                    <div class="content">
+                        用户登录
                     </div>
+                </h2>
+                <form class="ui large form" method="post" action="#" th:action="@{/user/login}">
+                    <div class="ui segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="username" placeholder="用户名" th:value="${userName}">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="密码" th:value="${password}">
+                            </div>
+                        </div>
+                        <div class="field" align="left">
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="remember" th:checked="${password}!=null ? true : false">
+                                <label>记住我</label>
+                            </div>
+                        </div>
+                        <button class="ui fluid large blue submit button"><i class="sign in icon"></i>登&nbsp;&nbsp;&nbsp;&nbsp;录
+                        </button>
+
+
+                    </div>
+
+                    <div class="ui error mini message"></div><!-- 表单验证的错误消息-->
+
+                    <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">
+                        用户名或密码错误！
+                    </div>
+                    <br/><!-- 后端验证的错误消息-->
+
+                </form>
+
+                <div class="field">
+                    <div class="ui left input">
+
+                        <a href="#" th:href="@{/}">返回首页</a>
+                    </div>
+
                 </div>
-                <button class="ui fluid large blue submit button"><i class="sign in icon"></i>登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
 
-
-              </div>
-
-              <div class="ui error mini message"></div><!-- 表单验证的错误消息-->
-
-                <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用户名或密码错误！</div><br/><!-- 后端验证的错误消息-->
-
-            </form>
-
-              <div class="field">
-                  <div class="ui left input">
-
-                      <a href="#" th:href="@{/}">返回首页</a>
-                  </div>
-
-              </div>
-
-          </div>
+            </div>
         </div>
     </div>
-  </div>
+</div>
 
 
-  <th:block th:replace="_fragments :: script"> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
-  <script src="../../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
-  <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
-  </th:block>
+<th:block th:replace="_fragments :: script"> <!--加上/*/在静态页面是注释，在thymeleaf是有效的 -->
+    <script src="../../static/js/jquery-1.12.4.js" th:src="@{/js/jquery-1.12.4.js}"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+</th:block>
 
 
-    <script>
-        $(function () {
+<script>
+    $(function () {
 
-        })
-        
-        $('.ui.form').form({//表单验证
-          inline : true,
-          on     : 'blur',
-            fields : {
-                username : {
-                    identifier: 'username',
-                    rules: [{
-                        type : 'empty',
-                        prompt: '请输入用户名'
-                    }]
-                },
-                password : {
-                    identifier: 'password',
-                    rules: [{
-                        type : 'empty',
-                        prompt: '请输入密码'
-                    }]
-                }
+    })
+
+    $('.ui.form').form({//表单验证
+        inline: true,
+        on: 'blur',
+        fields: {
+            username: {
+                identifier: 'username',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入用户名'
+                }]
+            },
+            password: {
+                identifier: 'password',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入密码'
+                }]
             }
-        });
+        }
+    });
 
-    </script>
+</script>
 
 </body>
 </html>

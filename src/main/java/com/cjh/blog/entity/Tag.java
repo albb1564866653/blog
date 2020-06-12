@@ -9,7 +9,8 @@ public class Tag {
     private Long id;
     @NotBlank(message = "标签名称不能为空！")
     private String name;
-    private List<Blog> blogs=new ArrayList<>();;//多对多关系
+    private List<Blog> blogs = new ArrayList<>();
+    ;//多对多关系
 
     public Tag() {
     }

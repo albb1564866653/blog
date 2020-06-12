@@ -5,39 +5,39 @@
 
 <!-- namespace：该mapper.xml映射文件的 唯一标识 -->
 <mapper namespace="com.cjh.blog.dao.CommentRepository">
-	<resultMap id="comment_blog_map" type="Comment">
-		<id property="id" column="id"></id>
-		<result property="nickname" column="nickname"></result>
-		<result property="email" column="email"></result>
-		<result property="content" column="content"></result>
-		<result property="avatar" column="avatar"></result>
-		<result property="createTime" column="create_time"></result>
-		<result property="adminComment" column="admin_comment"></result>
-		<association property="blog" javaType="Blog">
-			<id property="id" column="blog_id"></id>
-		</association>
-		<association property="parentComment" javaType="Comment">
-			<id property="id" column="parent_comment_id"></id>
-			<result property="nickname" column="parent_comment_nickname"></result>
-		</association>
-<!--		<collection property="replyComments" ofType="Comment">-->
-<!--			<id property="id" column="parent_comment_id"></id>-->
-<!--		</collection>-->
-	</resultMap>
+    <resultMap id="comment_blog_map" type="Comment">
+        <id property="id" column="id"></id>
+        <result property="nickname" column="nickname"></result>
+        <result property="email" column="email"></result>
+        <result property="content" column="content"></result>
+        <result property="avatar" column="avatar"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="adminComment" column="admin_comment"></result>
+        <association property="blog" javaType="Blog">
+            <id property="id" column="blog_id"></id>
+        </association>
+        <association property="parentComment" javaType="Comment">
+            <id property="id" column="parent_comment_id"></id>
+            <result property="nickname" column="parent_comment_nickname"></result>
+        </association>
+        <!--		<collection property="replyComments" ofType="Comment">-->
+        <!--			<id property="id" column="parent_comment_id"></id>-->
+        <!--		</collection>-->
+    </resultMap>
 
     <select id="selectCommentsByBlogId" parameterType="Long" resultMap="comment_blog_map">
-		select t2.id,t2.nickname,t2.email,t2.content,t2.avatar,t2.create_time,
-		t2.blog_id,t2.parent_comment_id,t2.parent_comment_nickname,t2.admin_comment
-		from t_blog t1,t_comment t2
-		where t1.id=t2.blog_id
-		and t2.blog_id=#{blog_id}
-		order by create_time desc
-	</select>
+        select t2.id,t2.nickname,t2.email,t2.content,t2.avatar,t2.create_time,
+        t2.blog_id,t2.parent_comment_id,t2.parent_comment_nickname,t2.admin_comment
+        from t_blog t1,t_comment t2
+        where t1.id=t2.blog_id
+        and t2.blog_id=#{blog_id}
+        order by create_time desc
+    </select>
 
-	<insert id="saveComment" parameterType="Comment">
-		insert into t_comment values (#{id},#{nickname},#{email},#{content},#{avatar},
-		#{createTime},#{blog.id},#{parentComment.id},#{parentComment.nickname},#{adminComment})
-	</insert>
+    <insert id="saveComment" parameterType="Comment">
+        insert into t_comment values (#{id},#{nickname},#{email},#{content},#{avatar},
+        #{createTime},#{blog.id},#{parentComment.id},#{parentComment.nickname},#{adminComment})
+    </insert>
 
     <select id="selectCommentByParentCommentId" parameterType="Long" resultMap="comment_blog_map">
         select t1.id,t1.nickname,t1.email,t1.content,t1.avatar,t1.create_time,t1.blog_id,
@@ -48,11 +48,11 @@
         delete from t_comment where blog_id=#{blog_id}
     </delete>
 
-	<update id="updateAdminComment">
-		update t_comment set nickname=#{nickname},email=#{email} where admin_comment=1
-	</update>
+    <update id="updateAdminComment">
+        update t_comment set nickname=#{nickname},email=#{email} where admin_comment=1
+    </update>
 
-	<select id="selectCommentCount" parameterType="Long" resultType="Long">
+    <select id="selectCommentCount" parameterType="Long" resultType="Long">
         select count(*) from t_comment where blog_id=#{blog_id};
     </select>
 

@@ -43,5 +43,5 @@ public interface BlogService {
     Long isExistTagId(String tagId);
 
     Long isExistTypeId(Long typeId);
-    
+
 }

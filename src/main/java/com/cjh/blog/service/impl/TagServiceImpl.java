@@ -45,7 +45,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public int updateTag(Tag tag) {
         Tag t = tagRepository.getTag(tag.getId());
-        if(t==null){
+        if (t == null) {
             throw new NotFoundException("不存在该标签！");
         }
         return tagRepository.updateTag(tag);
@@ -60,16 +60,16 @@ public class TagServiceImpl implements TagService {
         //获取其他存在于t_blog_tags表的tag_id值
         List<Long> tagIds = tagRepository.selectTagId(blogId);
 
-        if(blogId!=null){//blog_tags表有关联的数据
+        if (blogId != null) {//blog_tags表有关联的数据
 
-            StringBuffer sb=new StringBuffer();
-            for(Long temp:tagIds){
-                sb.append(temp+",");
+            StringBuffer sb = new StringBuffer();
+            for (Long temp : tagIds) {
+                sb.append(temp + ",");
             }
             //sb：1,2,3,
-            sb.deleteCharAt(sb.length()-1);//把尾部的","去除
+            sb.deleteCharAt(sb.length() - 1);//把尾部的","去除
             //更新t_blog表的tag_ids
-            tagRepository.updateTagIds(new BlogAndTag2(sb.toString(),blogId));
+            tagRepository.updateTagIds(new BlogAndTag2(sb.toString(), blogId));
 
         }
 
@@ -79,9 +79,9 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> selectTagsByIds(String ids) {//1,2,3
-        List<Tag> tags=new ArrayList<>();
+        List<Tag> tags = new ArrayList<>();
         List<Long> ids2 = convertToList(ids);//[1,2,3]
-        for(Long temp:ids2){
+        for (Long temp : ids2) {
             tags.add(tagRepository.getTag(temp));
         }
         return tags;
@@ -91,7 +91,7 @@ public class TagServiceImpl implements TagService {
         List<Long> list = new ArrayList<>();
         if (!"".equals(ids) && ids != null) {
             String[] idarray = ids.split(",");
-            for (int i=0; i < idarray.length;i++) {
+            for (int i = 0; i < idarray.length; i++) {
                 list.add(new Long(idarray[i]));
             }
         }

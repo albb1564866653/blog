@@ -34,16 +34,16 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public int saveComment(Comment comment) {
-        Long parentCommentId=comment.getParentComment().getId();
-        System.out.println("parentCommentId-----:"+parentCommentId);
-        if(parentCommentId!=-1){
-            System.out.println("父级评论："+commentRepository.selectCommentByParentCommentId(parentCommentId));
+        Long parentCommentId = comment.getParentComment().getId();
+        System.out.println("parentCommentId-----:" + parentCommentId);
+        if (parentCommentId != -1) {
+            System.out.println("父级评论：" + commentRepository.selectCommentByParentCommentId(parentCommentId));
             comment.setParentComment(commentRepository.selectCommentByParentCommentId(parentCommentId));
-        }else{
+        } else {
             comment.setParentComment(null);
         }
         comment.setCreateTime(new Date());
-        System.out.println("处理完毕的评论类："+comment);
+        System.out.println("处理完毕的评论类：" + comment);
         return commentRepository.saveComment(comment);
     }
 

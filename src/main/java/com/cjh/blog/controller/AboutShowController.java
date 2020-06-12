@@ -21,8 +21,8 @@ public class AboutShowController {
     private UserService userService;
 
     @GetMapping("/about")
-    public String about(Model model){
-        GetOtherData.getNewBlogEstAndAvatar(blogService,userService,model);
+    public String about(Model model) {
+        GetOtherData.getNewBlogEstAndAvatar(blogService, userService, model);
 
         return "about";
     }

@@ -12,7 +12,7 @@ public class User {
     private String username;
     private String password;
     @Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
-            ,message = "邮箱格式不正确")
+            , message = "邮箱格式不正确")
     private String email;
     private String avatar;
     private Integer type;

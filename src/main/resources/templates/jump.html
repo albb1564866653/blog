@@ -10,18 +10,17 @@
 &nbsp;注册成功，正在跳转...
 <input id="lastUrl" type="hidden" th:value="${lastUrl}"/>
 <script th:inline="javascript">
-    var lastUrl=$('#lastUrl').val();
+    var lastUrl = $('#lastUrl').val();
     //判断url是否包含这个请求地址
-    if(lastUrl.indexOf("/user/toRegister")!=-1){
-        lastUrl="/";
+    if (lastUrl.indexOf("/user/toRegister") != -1) {
+        lastUrl = "/";
     }
     // alert(lastUrl)
-    var openid=[[${openid}]];
+    var openid = [[${openid}]];
 
-    var url=lastUrl;
+    var url = lastUrl;
     setTimeout('location.href=url', 3000);
 </script>
-
 
 
 </body>

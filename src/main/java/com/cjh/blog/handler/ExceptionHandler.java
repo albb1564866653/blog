@@ -12,20 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ExceptionHandler {
 
-    private final Logger logger= LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
-    public ModelAndView exceptionHander(HttpServletRequest request,Exception e) throws Exception {
-        logger.error("Request URL : {},Exception : {}",request.getRequestURL(),e);
+    public ModelAndView exceptionHander(HttpServletRequest request, Exception e) throws Exception {
+        logger.error("Request URL : {},Exception : {}", request.getRequestURL(), e);
 
         if (AnnotationUtils.findAnnotation(e.getClass(),
                 ResponseStatus.class) != null) {
             throw e;
         }
 
-        ModelAndView mv=new ModelAndView();
-        mv.addObject("url",request.getRequestURL());
-        mv.addObject("exception",e);
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("url", request.getRequestURL());
+        mv.addObject("exception", e);
         mv.setViewName("error/error");
         return mv;
     }
