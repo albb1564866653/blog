@@ -34,7 +34,7 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-<div class="ui attached pointing menu">
+<div class="ui attached pointing menu animated fadeInDown">
     <div class="ui container">
         <div class="right menu">
             <a href="#" th:href="@{/admin/blogs/input}" class="item"><i class="edit icon"></i>发布</a>
@@ -57,7 +57,7 @@
         </div>
 
         <span th:if="${searchBlog}==null">
-          <form action="#" method="get" th:action="@{/admin/blogs/search}" class="ui secondary segment form">
+          <form action="#" method="get" th:action="@{/admin/blogs/search}" class="ui secondary segment form animated fadeInLeft">
             <div class="inline fields">
               <div class="field">
                 <input type="text" name="title" placeholder="标题">

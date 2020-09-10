@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -24,10 +25,14 @@ public class AdminController {
     private CommentService commentService;
 
     @GetMapping("/adminInfo")
-    public String adminInfo(HttpSession session, Model model) {
+    public String adminInfo(HttpSession session, Model model, HttpServletRequest request) {
         User user = (User) session.getAttribute("user");
         User userInfo = userService.selectUser(user.getUsername());
         model.addAttribute("userInfo", userInfo);
+
+        String lastUrl = request.getHeader("Referer");
+        System.out.println("lastUrl-----------:"+lastUrl);
+        model.addAttribute("lastUrl", lastUrl);
         return "admin/adminInfo";
     }
 

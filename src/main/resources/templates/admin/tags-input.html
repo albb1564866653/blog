@@ -34,10 +34,10 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-<div class="ui attached pointing menu">
+<div class="ui attached pointing menu animated fadeInDown">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" th:href="@{/admin/tags/input}" class="blue active item"><i class="edit icon"></i>新增</a>
+            <a href="#" th:href="@{/admin/tags/input}" class="blue active item"><i class="edit icon"></i><span th:text="${editing}!=null ? '编辑' : '新增'">新增</span></a>
             <a href="#" th:href="@{/admin/tags}" class="blue item"><i class="browser icon"></i>列表</a>
         </div>
     </div>
@@ -68,6 +68,7 @@
                 <p th:errors="*{name}">提交信息不符合规则</p>
               </div>
              /*/-->
+
             <div class="ui right aligned container">
                 <button type="button" class="ui button" id="return-btn"><i class="share icon"></i>返回</button>
                 <button class="ui blue submit button"><i class="checkmark icon"></i>提交</button>

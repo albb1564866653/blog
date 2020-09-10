@@ -34,7 +34,7 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-<div class="ui attached pointing menu">
+<div class="ui attached pointing menu animated fadeInDown">
     <div class="ui container">
         <div class="right menu">
             <a href="#" th:href="@{/admin/tags/input}" class="item"><i class="edit icon"></i>新增</a>
@@ -69,9 +69,9 @@
                 <td th:text="${tag.id}" class="left aligned collapsing">1</td>
                 <td th:text="${tag.name}">刻意练习清单</td>
                 <td class="right aligned collapsing">
-                    <a href="#" th:href="@{/admin/tags/editInput/{id}/(id=${tag.id})}" class="ui blue basic button"><i
+                    <a href="#" th:href="@{/admin/tags/editInput/{id}/{pageNum}/(id=${tag.id},pageNum=${page.getPageNum()})}" class="ui blue basic button"><i
                             class="edit icon"></i>编辑</a>
-                    <a href="#" onclick="return confirm('确定要删除吗？')" th:href="@{/admin/tags/delete/{id}/(id=${tag.id})}"
+                    <a href="#" onclick="return confirm('确定要删除吗？')" th:href="@{/admin/tags/delete/{id}/{pageNum}/(id=${tag.id},pageNum=${page.getPageNum()})}"
                        class="ui red basic button"><i class="trash icon"></i>删除</a>
                 </td>
             </tr>

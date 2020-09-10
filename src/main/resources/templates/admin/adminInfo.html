@@ -43,9 +43,9 @@
                         <button class="ui fluid large blue submit button"><i class="save icon"></i>保&nbsp;&nbsp;&nbsp;&nbsp;存
                         </button>
                         <br/>
-                        <button type="button" class="ui fluid large button" onclick="window.history.go(-1)"><i
+                        <a th:href="${lastUrl}" href="#"><button type="button" class="ui fluid large button"><i
                                 class="share icon"></i>返&nbsp;&nbsp;&nbsp;&nbsp;回
-                        </button>
+                        </button></a>
                     </div>
 
                     <div class="ui error mini message"></div><!-- 表单验证的错误消息-->

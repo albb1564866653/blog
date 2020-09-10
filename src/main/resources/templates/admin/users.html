@@ -3,13 +3,13 @@
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>分类管理</title>
+    <title>用户管理</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me-css.css" th:href="@{/css/me-css.css}">
 </head>
 <body>
 <!--导航-->
-<nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="admin/_fragments :: menu(5)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui blue header item">后台管理</h2>
@@ -34,14 +34,14 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-<div class="ui attached pointing menu animated fadeInDown">
-    <div class="ui container">
-        <div class="right menu">
-            <a href="#" th:href="@{/admin/types/input}" class="item"><i class="edit icon"></i>新增</a>
-            <a href="#" th:href="@{/admin/types}" class="blue active item"><i class="browser icon"></i>列表</a>
-        </div>
-    </div>
-</div>
+<!--<div class="ui attached pointing menu animated fadeInDown">-->
+<!--    <div class="ui container">-->
+<!--        <div class="right menu">-->
+<!--            <a href="#" th:href="@{/admin/types/input}" class="item"><i class="edit icon"></i>新增</a>-->
+<!--            <a href="#" th:href="@{/admin/types}" class="blue active item"><i class="browser icon"></i>列表</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!--中间内容-->
 <div class="m-container-small m-padded-tb-big me-main">
@@ -59,43 +59,49 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>名称</th>
+                <th>头像</th>
+                <th>用户昵称</th>
+                <th>用户名</th>
+                <th>邮箱</th>
+                <th>注册时间</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="type : ${page.list}">
-                <td th:text="${type.id}" class="left aligned collapsing">1</td>
-                <td th:text="${type.name}">刻意练习清单</td>
+            <tr th:each="userManage : ${page.list}">
+                <td th:text="${userManage.id}" class="left aligned collapsing">1</td>
+                <td><img class="ui avatar image" th:src="${userManage.avatar}" src="/images/wireframe/square-image.png"></td>
+                <td th:text="${userManage.nickname}">小明</td>
+                <td th:text="${userManage.username}">hello</td>
+                <td th:text="${userManage.email}">mysql</td>
+                <td th:text="${#dates.format(userManage.createTime,'yyyy/MM/dd HH:mm:ss')}">2020-05-28 09:17:31</td>
+
                 <td class="right aligned collapsing">
-                    <a href="#" th:href="@{/admin/types/editInput/{id}/{pageNum}/(id=${type.id},pageNum=${page.getPageNum()})}" class="ui blue basic button"><i
-                            class="edit icon"></i>编辑</a>
                     <a href="#" onclick="return confirm('确定要删除吗？')"
-                       th:href="@{/admin/types/delete/{id}/{pageNum}/(id=${type.id},pageNum=${page.getPageNum()})}" class="ui red basic button"><i
+                       th:href="@{/admin/users/delete/{id}/{pageNum}/(id=${userManage.id},pageNum=${page.getPageNum()})}" class="ui red basic button"><i
                             class="trash icon"></i>删除</a>
                 </td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
-                <th colspan="6">
+                <th colspan="7">
                     <div class="ui pagination menu" th:if="${page.getPages()>1}">
-                        <a class="icon item" th:href="@{/admin/types}" th:unless="${page.isIsFirstPage()}">首页</a>
+                        <a class="icon item" th:href="@{/admin/users}" th:unless="${page.isIsFirstPage()}">首页</a>
                         <!--/admin/types?pageNum=?-1-->
                         <a class="icon item"
-                           th:href="@{/admin/types(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1)}"
+                           th:href="@{/admin/users(pageNum=${page.isHasPreviousPage()}?${page.getPageNum()-1}:1)}"
                            th:unless="${page.isIsFirstPage()}">上一页</a>
                         <!--/admin/types?pageNum=?+1 -->
                         <a class="icon item"
-                           th:href="@{/admin/types(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages})}"
+                           th:href="@{/admin/users(pageNum=${page.isHasNextPage()}?${page.getPageNum()+1}:${page.pages})}"
                            th:unless="${page.isIsLastPage()}">下一页</a>
-                        <a class="icon item" th:href="@{/admin/types(pageNum=${page.pages})}"
+                        <a class="icon item" th:href="@{/admin/users(pageNum=${page.pages})}"
                            th:unless="${page.isIsLastPage()}">尾页</a>
 
                     </div>
 
-                    <a href="#" th:href="@{/admin/types/input}" class="ui right floated blue button"><i
-                            class="plus icon"></i>新增</a>
+
                 </th>
             </tr>
             </tfoot>
@@ -150,22 +156,12 @@
 
 <script>
     if ($('#tc').attr('class') == 'ui message success') {
-        if ($('#chbtn').text() == '新增成功！') {
-            swal("新增成功", null, "success")
-        } else if ($('#chbtn').text() == '更新成功！') {
-            swal("修改成功", null, "success")
-        } else if ($('#chbtn').text() == '删除成功！') {
-            swal("已删除", null, "success")
+        if ($('#chbtn').text() == '删除成功！') {
+            swal("删除成功", null, "success")
         }
     } else if ($('#tc').attr('class') == 'ui message negative') {
-        if ($('#chbtn').text().indexOf("该分类已存在于你的博客中")) {
-            swal("该分类已被使用", null, "error")
-        } else if ($('#chbtn').text() == '新增失败！') {
-            swal("发布失败", '系统异常', "error")
-        } else if ($('#chbtn').text() == '更新失败！') {
-            swal("修改失败", '系统异常', "error")
-        } else if ($('#chbtn').text() == '删除失败！') {
-            swal("删除失败", '系统异常', "error")
+        if ($('#chbtn').text().indexOf("删除失败")) {
+            swal("删除失败", null, "error")
         }
     }
 

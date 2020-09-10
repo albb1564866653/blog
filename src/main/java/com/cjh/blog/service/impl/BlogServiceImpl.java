@@ -111,12 +111,17 @@ public class BlogServiceImpl implements BlogService {
             List<Tag> tags = blog.getTags();
             //随机数作为blog的id值
             i = (int) (Math.random() * 1000) + 1;
-            ;
 
-            Blog isExit = blogRepository.selectBlogById((long) i);
-            if (isExit != null) {//这个随机数存在于数据库，不能使用
-                i = (int) (Math.random() * 1000) + 1;
+            Blog isExit = null;
+            while (true){//循环判断随机生成的id 是否已存在
+                isExit=blogRepository.selectBlogById((long) i);
+                if (isExit != null) {//这个随机数存在于数据库，不能使用
+                i = (int) (Math.random() * 1000) + 1;//重新生成随机数
+                }else{
+                    break;
+                }
             }
+
             blog.setId((long) i);
 
             BlogAndTag blogAndTag = null;

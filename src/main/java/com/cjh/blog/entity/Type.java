@@ -14,6 +14,7 @@ public class Type {
     public Type() {
     }
 
+
     public Long getId() {
         return id;
     }

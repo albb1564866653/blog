@@ -35,10 +35,10 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-<div class="ui attached pointing menu">
+<div class="ui attached pointing menu animated fadeInDown">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" th:href="@{/admin/blogs/input}" class="blue active item"><i class="edit icon"></i>发布</a>
+            <a href="#" th:href="@{/admin/blogs/input}" class="blue active item"><i class="edit icon"></i><span th:text="${updatePage}!=null ? '编辑' : '发布'">发布</span></a>
             <a href="#" th:href="@{/admin/blogs}" class="item"><i class="browser icon"></i>列表</a>
         </div>
     </div>

@@ -1,10 +1,11 @@
 package com.cjh.blog.util;
 
 
+
 import org.apache.commons.codec.digest.DigestUtils;
 
-public class Md5Encode {
 
+public class Md5Encode {
     //md5加密
     public static String md5Encode(String password) {//byte[] ("abc")-->String("123134fjdf")
         byte[] input = password.getBytes();
@@ -21,6 +22,7 @@ public class Md5Encode {
         String str = "12345";
         str = md5Encode(str);
         System.out.println("加密后的结果：" + str);
+
     }
 
 }
